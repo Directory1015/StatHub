@@ -90,6 +90,323 @@
         { "name": "Hakan Çalhanoğlu (Inter Milan)", "value": "2" },
         { "name": "Lamine Yamal (Barcelona)", "value": "1" }
       ]
+    },
+
+    {
+      "key": "mls",
+      "name": "Major League Soccer",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "eredivisie",
+      "name": "Eredivisie",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "primeiraliga",
+      "name": "Primeira Liga",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "saudi",
+      "name": "Saudi Pro League",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "brasileirao",
+      "name": "Brasileirão Série A",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Clube)", "value": "0" },
+        { "name": "Player B (Clube)", "value": "0" },
+        { "name": "Player C (Clube)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Clube)", "value": "0" },
+        { "name": "Player E (Clube)", "value": "0" },
+        { "name": "Player F (Clube)", "value": "0" }
+      ]
+    },
+    {
+      "key": "argprimera",
+      "name": "Argentine Primera División",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "ligamx",
+      "name": "Liga MX",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "j1",
+      "name": "J1 League",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "rpl",
+      "name": "Russian Premier League",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "superlig",
+      "name": "Turkish Süper Lig",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Kulüp)", "value": "0" },
+        { "name": "Player B (Kulüp)", "value": "0" },
+        { "name": "Player C (Kulüp)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Kulüp)", "value": "0" },
+        { "name": "Player E (Kulüp)", "value": "0" },
+        { "name": "Player F (Kulüp)", "value": "0" }
+      ]
+    },
+    {
+      "key": "jpl",
+      "name": "Belgian Pro League",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "scottish",
+      "name": "Scottish Premiership",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "upl",
+      "name": "Ukrainian Premier League",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "efl",
+      "name": "EFL Championship",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+
+    {
+      "key": "uel",
+      "name": "UEFA Europa League",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "uecl",
+      "name": "UEFA Conference League",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Club)", "value": "0" },
+        { "name": "Player B (Club)", "value": "0" },
+        { "name": "Player C (Club)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Club)", "value": "0" },
+        { "name": "Player E (Club)", "value": "0" },
+        { "name": "Player F (Club)", "value": "0" }
+      ]
+    },
+    {
+      "key": "conmebol_wcq",
+      "name": "CONMEBOL World Cup Qualifiers",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Nation)", "value": "0" },
+        { "name": "Player B (Nation)", "value": "0" },
+        { "name": "Player C (Nation)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Nation)", "value": "0" },
+        { "name": "Player E (Nation)", "value": "0" },
+        { "name": "Player F (Nation)", "value": "0" }
+      ]
+    },
+    {
+      "key": "afc_wcq",
+      "name": "AFC World Cup Qualifiers",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Nation)", "value": "0" },
+        { "name": "Player B (Nation)", "value": "0" },
+        { "name": "Player C (Nation)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Nation)", "value": "0" },
+        { "name": "Player E (Nation)", "value": "0" },
+        { "name": "Player F (Nation)", "value": "0" }
+      ]
+    },
+    {
+      "key": "caf_wcq",
+      "name": "CAF World Cup Qualifiers",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Nation)", "value": "0" },
+        { "name": "Player B (Nation)", "value": "0" },
+        { "name": "Player C (Nation)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Nation)", "value": "0" },
+        { "name": "Player E (Nation)", "value": "0" },
+        { "name": "Player F (Nation)", "value": "0" }
+      ]
+    },
+    {
+      "key": "uefa_wcq",
+      "name": "UEFA European Qualifiers",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Nation)", "value": "0" },
+        { "name": "Player B (Nation)", "value": "0" },
+        { "name": "Player C (Nation)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Nation)", "value": "0" },
+        { "name": "Player E (Nation)", "value": "0" },
+        { "name": "Player F (Nation)", "value": "0" }
+      ]
+    },
+    {
+      "key": "nations",
+      "name": "UEFA Nations League",
+      "record": { "holder": "—", "goals": "—", "season": "—" },
+      "scorers": [
+        { "name": "Player A (Nation)", "value": "0" },
+        { "name": "Player B (Nation)", "value": "0" },
+        { "name": "Player C (Nation)", "value": "0" }
+      ],
+      "assisters": [
+        { "name": "Player D (Nation)", "value": "0" },
+        { "name": "Player E (Nation)", "value": "0" },
+        { "name": "Player F (Nation)", "value": "0" }
+      ]
     }
   ]
 }
