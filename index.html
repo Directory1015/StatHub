@@ -31,15 +31,38 @@
     .shell{max-width:var(--maxw); margin:0 auto; padding:24px 20px 40px}
     .grid{display:grid; gap:26px; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); justify-content:center}
 
+    /* Tighter control for smaller screens */
+    @media (max-width: 900px){
+      .grid{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+    }
+    @media (max-width: 640px){
+      .grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+
     /* circle tiles */
-    .tile{ --accent:#5aa2ff; width:140px; height:140px; border-radius:50%;
-      background:linear-gradient(180deg,#111724,#0f1522); border:2px solid var(--divider);
-      box-shadow:var(--shadow); display:flex; align-items:center; justify-content:center; flex-direction:column;
+    .tile{
+      --accent:#5aa2ff;
+      --stagger: 0px;               /* gets set via media query below */
+      width:140px; height:140px; border-radius:50%;
+      background:linear-gradient(180deg,#111724,#0f1522);
+      border:2px solid var(--divider);
+      box-shadow:var(--shadow);
+      display:flex; align-items:center; justify-content:center; flex-direction:column;
       cursor:pointer; transition:.3s; position:relative; color:inherit;
+      transform: translateY(var(--stagger));
     }
     @media (prefers-reduced-motion:reduce){ .tile{transition:none} }
-    .tile:hover{ transform:translateY(-6px) scale(1.05); border-color:var(--accent);
-      box-shadow:0 14px 30px rgba(0,0,0,.45), 0 0 16px color-mix(in oklab, var(--accent) 45%, transparent); }
+    .tile:hover{
+      transform: translateY(calc(var(--stagger) - 6px)) scale(1.05);
+      border-color:var(--accent);
+      box-shadow:0 14px 30px rgba(0,0,0,.45), 0 0 16px color-mix(in oklab, var(--accent) 45%, transparent);
+    }
+
+    /* Stagger the circles on phones (zig-zag) */
+    @media (max-width: 640px){
+      .tile:nth-child(odd){  --stagger:  8px; }
+      .tile:nth-child(even){ --stagger: -8px; }
+    }
 
     .logoBox{
       width:70px; height:70px; margin-bottom:8px; display:grid; place-items:center; border-radius:50%;
@@ -99,9 +122,9 @@
     .shareLinks{display:flex; gap:10px; padding:0 18px 18px}
     .shareLinks a{font-size:13px; color:#cfe2ff; text-decoration:none; border:1px solid var(--divider); padding:6px 8px; border-radius:8px}
     .shareLinks a:hover{border-color:var(--brand)}
-    footer{text-align:center; color:var(--tx-dim); padding:20px; font-size:12px; border-top:1px solid rgba(255,255,255,.05)}
+    footer{text-align:center; color:#a6b0c3; padding:20px; font-size:12px; border-top:1px solid rgba(255,255,255,.05)}
     
-    /* export card (offscreen) */
+    /* export card (for jpeg capture) */
     .shareCard{
       width:1080px; padding:36px 36px 28px; border-radius:24px; 
       background: radial-gradient(1200px 600px at 50% -10%, rgba(90,162,255,.18), transparent 60%), #0b0d12;
@@ -158,7 +181,7 @@
 
       <!-- Share bar -->
       <div class="shareBar">
-        <button class="btn" id="btnSave"><span>📷</span> Save PNG</button>
+        <button class="btn" id="btnSave"><span>📷</span> Save JPG</button>
         <button class="btn" id="btnShare"><span>📤</span> Share Image</button>
         <button class="btn" id="btnCopyLink"><span>🔗</span> Copy Link</button>
         <span id="shareStatus" style="color:#a6f3c3; font-size:12px; font-weight:700"></span>
@@ -251,7 +274,7 @@
           const league = DATA.competitions.find(x=>x.key===key);
           openModal(league, DATA.updated);
           updateShareLinks(key, league.name);
-          history.replaceState(null, '', withLeagueParam(key)); // update URL for deep-linking
+          history.replaceState(null, '', withLeagueParam(key)); // deep-link in URL
         });
       });
 
@@ -291,7 +314,6 @@
       $('#mScorers').innerHTML   = listHTML(league.scorers);
       $('#mAssisters').innerHTML = listHTML(league.assisters);
 
-      // Wire share buttons for this league
       const key = league.key;
       $('#btnSave').onclick  = ()=> exportShareCard(league, updated, 'download');
       $('#btnShare').onclick = ()=> exportShareCard(league, updated, 'share');
@@ -307,8 +329,9 @@
     }
 
     function closeModal(){
-      const overlay=$('#overlay'); overlay.classList.remove('active'); overlay.setAttribute('aria-hidden','true');
-      // remove league from URL (optional)
+      const overlay=$('#overlay');
+      overlay.classList.remove('active');
+      overlay.setAttribute('aria-hidden','true');
       const u = new URL(location.href); u.searchParams.delete('league'); history.replaceState(null,'',u);
     }
 
@@ -316,7 +339,7 @@
     $('#overlay').addEventListener('click', (e)=>{ if(e.target.id==='overlay') closeModal(); });
     $('#mClose').addEventListener('click', closeModal);
 
-    // --- SHARE LINKS (deep link share)
+    /* Share links (deep link) */
     function updateShareLinks(key, name){
       const url = encodeURIComponent(withLeagueParam(key));
       const text = encodeURIComponent(`${name} player leaders on StatSnap`);
@@ -326,94 +349,66 @@
       $('#linkTG').href = `https://t.me/share/url?url=${url}&text=${text}`;
     }
 
-    // --- IMAGE EXPORT + NATIVE SHARE ---
+    /* === IMAGE EXPORT (JPEG) + NATIVE SHARE === */
     async function exportShareCard(league, updated, mode){
-      // Build an offscreen share card
+      // Build offscreen share card
       const box = document.createElement('div');
       box.className = 'shareCard';
-      const logo = LOGOS[league.key]?.src || '';
+      const logo = LOGOS[league.key]?.src ? `${LOGOS[league.key].src}?v=${Date.now()}` : '';
       const when = new Date(updated).toLocaleDateString();
-
       const makeList = (arr)=>arr.map((p,i)=>`
         <li><span class="i">${i+1}</span><span class="name">${p.name}</span><span class="v">${p.value}</span></li>
       `).join('');
-
       box.innerHTML = `
         <div class="top">
           <div class="league">
-            <div class="logo"><img src="${logo}" alt=""></div>
+            <div class="logo">${logo?`<img src="${logo}" alt="">`:""}</div>
             <span>${league.name}</span>
           </div>
           <div class="date">${when}</div>
         </div>
         <div class="rec">All-time single-season record: <b>${league.record.holder}</b> • ${league.record.goals} goals • ${league.record.season}</div>
         <div class="cols">
-          <div>
-            <h3>Top Scorers</h3>
-            <ol>${makeList(league.scorers)}</ol>
-          </div>
-          <div>
-            <h3>Top Assisters</h3>
-            <ol>${makeList(league.assisters)}</ol>
-          </div>
+          <div><h3>Top Scorers</h3><ol>${makeList(league.scorers)}</ol></div>
+          <div><h3>Top Assisters</h3><ol>${makeList(league.assisters)}</ol></div>
         </div>
       `;
-      box.style.position='fixed'; box.style.left='-20000px'; // offscreen
+      box.style.position='fixed'; box.style.left='-20000px';
       document.body.appendChild(box);
 
-      // Wait for html2canvas (loaded with defer)
-      if (typeof html2canvas !== 'function'){
-        alert('Image tool failed to load. Try again.');
-        box.remove();
-        return;
-      }
+      if (typeof html2canvas !== 'function'){ alert('Image tool failed to load. Try again.'); box.remove(); return; }
 
-      const canvas = await html2canvas(box, {backgroundColor:null, scale:2, useCORS:true});
+      // For JPEG, set a solid dark background so it doesn't default to white
+      const canvas = await html2canvas(box, {backgroundColor:'#0b0d12', scale:2, useCORS:true});
       box.remove();
 
-      // Convert to blob
-      const blob = await new Promise(res=>canvas.toBlob(res,'image/png',1));
-      const fileName = `${league.key}-leaders.png`;
+      // Convert to JPEG
+      const blob = await new Promise(res=>canvas.toBlob(res,'image/jpeg',0.92));
+      const fileName = `${league.key}-leaders.jpg`;
 
       if (mode==='download'){
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url; a.download = fileName;
-        document.body.appendChild(a); a.click(); a.remove();
-        URL.revokeObjectURL(url);
+        const a = document.createElement('a'); a.href = url; a.download = fileName; a.click(); URL.revokeObjectURL(url);
         $('#shareStatus').textContent = 'Saved!';
         setTimeout(()=>$('#shareStatus').textContent='', 1600);
         return;
       }
 
-      // mode === 'share' → use Web Share API when available
-      if (navigator.canShare && navigator.canShare({ files: [new File([blob], fileName, {type:'image/png'})] })) {
-        try{
-          await navigator.share({
-            title: 'StatSnap',
-            text: `${league.name} leaders`,
-            files: [new File([blob], fileName, {type:'image/png'})]
-          });
-        }catch(e){
-          // user cancelled or failed → fall back to download
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url; a.download = fileName; a.click();
-          URL.revokeObjectURL(url);
-        }
-      } else {
-        // Fallback: try copy to clipboard (supported on Chrome/Edge)
-        try{
-          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-          $('#shareStatus').textContent = 'Image copied — paste to chats!';
-          setTimeout(()=>$('#shareStatus').textContent='', 2000);
-        }catch(err){
-          // final fallback: download
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url; a.download = fileName; a.click();
-          URL.revokeObjectURL(url);
-        }
+      // Native share (JPEG file)
+      const file = new File([blob], fileName, {type:'image/jpeg'});
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try{ await navigator.share({ title:'StatSnap', text:`${league.name} leaders`, files:[file] }); return; }
+        catch(_){} // fall through to clipboard/download
+      }
+
+      // Try clipboard as image/jpeg
+      try{
+        await navigator.clipboard.write([new ClipboardItem({ 'image/jpeg': blob })]);
+        $('#shareStatus').textContent = 'Image copied — paste to chats!';
+        setTimeout(()=>$('#shareStatus').textContent='', 2000);
+      }catch(err){
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = fileName; a.click(); URL.revokeObjectURL(url);
       }
     }
 
@@ -422,6 +417,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
