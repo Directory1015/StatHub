@@ -1,5 +1,5 @@
 {
-  "updated": "2025-09-28",
+  "updated": "2025-09-30",
   "competitions": [
     {
       "key": "epl",
@@ -76,337 +76,270 @@
         { "name": "Félix Correia (LOSC Lille)", "value": "3" }
       ]
     },
+
+    /* ===== Updated with your tournament note (MD1) ===== */
     {
       "key": "ucl",
-      "name": "UEFA Champions League",
+      "name": "UEFA Champions League (2025/26 — Matchday 1)",
       "record": { "holder": "Cristiano Ronaldo", "goals": "17", "season": "2013/14" },
       "scorers": [
-        { "name": "Kylian Mbappé (Real Madrid)", "value": "5" },
-        { "name": "Harry Kane (Bayern Munich)", "value": "4" },
-        { "name": "Jonathan Burkardt (Eintracht Frankfurt)", "value": "3" }
+        { "name": "Multiple players", "value": "3" },
+        { "name": "Multiple players", "value": "2" },
+        { "name": "Multiple players", "value": "2" }
       ],
       "assisters": [
-        { "name": "Lukáš Provod (Slavia Praha)", "value": "2" },
-        { "name": "Hakan Çalhanoğlu (Inter Milan)", "value": "2" },
-        { "name": "Lamine Yamal (Barcelona)", "value": "1" }
+        { "name": "Distributed", "value": "1" }
       ]
     },
 
-    {
-      "key": "mls",
-      "name": "Major League Soccer",
-      "record": { "holder": "—", "goals": "—", "season": "—" },
-      "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
-      ],
-      "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
-      ]
-    },
-    {
-      "key": "eredivisie",
-      "name": "Eredivisie",
-      "record": { "holder": "—", "goals": "—", "season": "—" },
-      "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
-      ],
-      "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
-      ]
-    },
+    /* ===== Your newly provided leagues & tournaments ===== */
+
     {
       "key": "primeiraliga",
-      "name": "Primeira Liga",
+      "name": "Primeira Liga (2025/26)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
+        { "name": "Clayton (Rio Ave)", "value": "5" },
+        { "name": "Guilherme Schettine (Moreirense)", "value": "5" },
+        { "name": "Silva C. (Benfica)", "value": "5" }
       ],
       "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
+        { "name": "Alberto Costa (Porto)", "value": "4" },
+        { "name": "Leonardo Lelo (Braga)", "value": "4" }
       ]
     },
     {
       "key": "saudi",
-      "name": "Saudi Pro League",
+      "name": "Saudi Pro League (2025/26)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
+        { "name": "João Félix (Al-Hilal)", "value": "5" },
+        { "name": "Multiple players", "value": "4" },
+        { "name": "Multiple players", "value": "4" }
       ],
       "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
+        { "name": "Kingsley Coman (Al-Nassr)", "value": "—" }
       ]
     },
     {
       "key": "brasileirao",
-      "name": "Brasileirão Série A",
+      "name": "Brasileirão Série A (2025)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Clube)", "value": "0" },
-        { "name": "Player B (Clube)", "value": "0" },
-        { "name": "Player C (Clube)", "value": "0" }
+        { "name": "Kaio Jorge (Cruzeiro)", "value": "15" },
+        { "name": "De Arrascaeta G. (Flamengo)", "value": "13" },
+        { "name": "Vegetti P. (Vasco da Gama)", "value": "12" }
       ],
       "assisters": [
-        { "name": "Player D (Clube)", "value": "0" },
-        { "name": "Player E (Clube)", "value": "0" },
-        { "name": "Player F (Clube)", "value": "0" }
+        { "name": "Gabigol (Flamengo)", "value": "—" }
       ]
     },
     {
       "key": "argprimera",
-      "name": "Argentine Primera División",
+      "name": "Argentine Primera División (2025)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
+        { "name": "Tomás Molina (Banfield)", "value": "12" },
+        { "name": "Adrián Emmanuel Martínez (Rosario Central)", "value": "10" },
+        { "name": "Andrés Vombergar (Platense)", "value": "10" }
       ],
       "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
+        { "name": "Javier Ruiz (Barracas Central)", "value": "6" }
       ]
     },
     {
       "key": "ligamx",
-      "name": "Liga MX",
+      "name": "Liga MX Apertura (2025)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
+        { "name": "Paulinho (Toluca)", "value": "—" }
       ],
       "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
+        { "name": "José Paradela", "value": "5" },
+        { "name": "Diego González", "value": "4" },
+        { "name": "Nicolás Castro", "value": "4" }
       ]
     },
     {
       "key": "j1",
-      "name": "J1 League",
+      "name": "J1 League (2025)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
+        { "name": "Leo Ceará (Cerezo Osaka)", "value": "17" },
+        { "name": "Rafael Ratão (Kashima Antlers)", "value": "11" },
+        { "name": "Rafael Papagaio (Kyoto Sanga)", "value": "9" }
       ],
       "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
+        { "name": "Lucas Fernandes (Urawa Reds)", "value": "—" }
       ]
     },
     {
       "key": "rpl",
-      "name": "Russian Premier League",
+      "name": "Russian Premier League (2025/26)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
+        { "name": "Aleksey Batrakov (Rubin Kazan)", "value": "8" },
+        { "name": "Mirlind Daku (Rubin Kazan)", "value": "8" }
       ],
       "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
+        { "name": "Eduard Spertsyan (Krasnodar)", "value": "—" }
       ]
     },
     {
       "key": "superlig",
-      "name": "Turkish Süper Lig",
+      "name": "Turkish Süper Lig (2025/26)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Kulüp)", "value": "0" },
-        { "name": "Player B (Kulüp)", "value": "0" },
-        { "name": "Player C (Kulüp)", "value": "0" }
+        { "name": "Mauro Icardi (Galatasaray)", "value": "5" },
+        { "name": "Tied group", "value": "5" },
+        { "name": "Tied group", "value": "5" }
       ],
       "assisters": [
-        { "name": "Player D (Kulüp)", "value": "0" },
-        { "name": "Player E (Kulüp)", "value": "0" },
-        { "name": "Player F (Kulüp)", "value": "0" }
+        { "name": "Mortadha Ben Ouanes (Fenerbahçe)", "value": "—" },
+        { "name": "Alexandru Maxim (Fenerbahçe)", "value": "—" }
       ]
     },
     {
       "key": "jpl",
-      "name": "Belgian Pro League",
+      "name": "Belgian Pro League (2025/26)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
+        { "name": "Thorgan Hazard (Anderlecht)", "value": "2" },
+        { "name": "Multiple players", "value": "2" }
       ],
       "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
+        { "name": "Nilson Angulo (Anderlecht)", "value": "4" },
+        { "name": "Jarne Steuckers (Genk)", "value": "4" }
       ]
     },
     {
       "key": "scottish",
-      "name": "Scottish Premiership",
+      "name": "Scottish Premiership (2025/26)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
+        { "name": "Ivan Dolček (Dundee United)", "value": "5" },
+        { "name": "Lawrence Shankland (Hearts)", "value": "4" },
+        { "name": "Emmanuel Longelo (Motherwell)", "value": "3" }
       ],
       "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
+        { "name": "Cameron Congreve (Dundee)", "value": "—" }
       ]
     },
     {
       "key": "upl",
-      "name": "Ukrainian Premier League",
+      "name": "Ukrainian Premier League (2025/26)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
+        { "name": "Pylyp Budkivskyi (Kolos Kovalivka)", "value": "4" },
+        { "name": "Vitaliy Buyalskyy (Dynamo Kyiv)", "value": "3" }
       ],
       "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
+        { "name": "Gleiker Mendoza (LNZ Cherkasy)", "value": "—" }
       ]
     },
     {
       "key": "efl",
-      "name": "EFL Championship",
+      "name": "EFL Championship (2025/26)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
+        { "name": "Haji Wright (Coventry City)", "value": "5" },
+        { "name": "Josh Sargent (Norwich City)", "value": "5" }
       ],
       "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
+        { "name": "Milan van Ewijk (Coventry City)", "value": "—" }
       ]
     },
 
     {
       "key": "uel",
-      "name": "UEFA Europa League",
+      "name": "UEFA Europa League (2025/26)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
+        { "name": "Bruno Fernandes", "value": "—" }
       ],
       "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
+        { "name": "Rayan Cherki", "value": "—" }
       ]
     },
     {
       "key": "uecl",
-      "name": "UEFA Conference League",
+      "name": "UEFA Conference League (2025/26)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Club)", "value": "0" },
-        { "name": "Player B (Club)", "value": "0" },
-        { "name": "Player C (Club)", "value": "0" }
+        { "name": "Afimico Pululu", "value": "—" }
       ],
       "assisters": [
-        { "name": "Player D (Club)", "value": "0" },
-        { "name": "Player E (Club)", "value": "0" },
-        { "name": "Player F (Club)", "value": "0" }
+        { "name": "Data limited", "value": "—" }
       ]
     },
+
     {
       "key": "conmebol_wcq",
-      "name": "CONMEBOL World Cup Qualifiers",
+      "name": "CONMEBOL World Cup Qualifiers (Ongoing)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Nation)", "value": "0" },
-        { "name": "Player B (Nation)", "value": "0" },
-        { "name": "Player C (Nation)", "value": "0" }
+        { "name": "Lionel Messi (Argentina)", "value": "8" },
+        { "name": "Luis Díaz (Colombia)", "value": "7" },
+        { "name": "Miguel Terceros (Bolivia)", "value": "7" }
       ],
       "assisters": [
-        { "name": "Player D (Nation)", "value": "0" },
-        { "name": "Player E (Nation)", "value": "0" },
-        { "name": "Player F (Nation)", "value": "0" }
+        { "name": "Lionel Messi (Argentina)", "value": "2" }
       ]
     },
     {
       "key": "afc_wcq",
-      "name": "AFC World Cup Qualifiers",
+      "name": "AFC World Cup Qualifiers (Ongoing)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Nation)", "value": "0" },
-        { "name": "Player B (Nation)", "value": "0" },
-        { "name": "Player C (Nation)", "value": "0" }
+        { "name": "Son Heung-min (South Korea)", "value": "—" }
       ],
       "assisters": [
-        { "name": "Player D (Nation)", "value": "0" },
-        { "name": "Player E (Nation)", "value": "0" },
-        { "name": "Player F (Nation)", "value": "0" }
+        { "name": "Data limited", "value": "—" }
       ]
     },
     {
       "key": "caf_wcq",
-      "name": "CAF World Cup Qualifiers",
+      "name": "CAF World Cup Qualifiers (Ongoing)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Nation)", "value": "0" },
-        { "name": "Player B (Nation)", "value": "0" },
-        { "name": "Player C (Nation)", "value": "0" }
+        { "name": "Mohamed Salah (Egypt)", "value": "6" },
+        { "name": "Jordan Ayew (Ghana)", "value": "5" },
+        { "name": "Mohamed Amoura (Algeria)", "value": "5" }
       ],
       "assisters": [
-        { "name": "Player D (Nation)", "value": "0" },
-        { "name": "Player E (Nation)", "value": "0" },
-        { "name": "Player F (Nation)", "value": "0" }
+        { "name": "Jordan Ayew (Ghana)", "value": "4" },
+        { "name": "Mohamed Salah (Egypt)", "value": "3" }
       ]
     },
     {
       "key": "uefa_wcq",
-      "name": "UEFA European Qualifiers",
+      "name": "UEFA European Qualifiers for 2026 World Cup (Sep 2025)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Nation)", "value": "0" },
-        { "name": "Player B (Nation)", "value": "0" },
-        { "name": "Player C (Nation)", "value": "0" }
+        { "name": "Erling Haaland (Norway)", "value": "9" },
+        { "name": "Andrej Kramarić (Croatia)", "value": "6" },
+        { "name": "Patrik Schick (Czechia)", "value": "4" }
       ],
       "assisters": [
-        { "name": "Player D (Nation)", "value": "0" },
-        { "name": "Player E (Nation)", "value": "0" },
-        { "name": "Player F (Nation)", "value": "0" }
+        { "name": "Martin Ødegaard (Norway)", "value": "7" },
+        { "name": "Sorba Thomas (Wales)", "value": "4" },
+        { "name": "Declan Rice (England)", "value": "4" }
       ]
     },
     {
       "key": "nations",
-      "name": "UEFA Nations League",
+      "name": "UEFA Nations League (Ongoing)",
       "record": { "holder": "—", "goals": "—", "season": "—" },
       "scorers": [
-        { "name": "Player A (Nation)", "value": "0" },
-        { "name": "Player B (Nation)", "value": "0" },
-        { "name": "Player C (Nation)", "value": "0" }
+        { "name": "Viktor Gyökeres (Sweden)", "value": "9" },
+        { "name": "Cristiano Ronaldo (Portugal)", "value": "8" },
+        { "name": "Erling Haaland (Norway)", "value": "7" }
       ],
       "assisters": [
-        { "name": "Player D (Nation)", "value": "0" },
-        { "name": "Player E (Nation)", "value": "0" },
-        { "name": "Player F (Nation)", "value": "0" }
+        { "name": "Nuno Mendes (Portugal)", "value": "6" },
+        { "name": "Joshua Kimmich (Germany)", "value": "6" }
       ]
     }
   ]
 }
+
