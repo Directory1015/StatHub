@@ -79,18 +79,22 @@
 
     /* ===== Updated with your tournament note (MD1) ===== */
     {
-      "key": "ucl",
-      "name": "UEFA Champions League (2025/26 — Matchday 1)",
-      "record": { "holder": "Cristiano Ronaldo", "goals": "17", "season": "2013/14" },
-      "scorers": [
-        { "name": "Multiple players", "value": "3" },
-        { "name": "Multiple players", "value": "2" },
-        { "name": "Multiple players", "value": "2" }
-      ],
-      "assisters": [
-        { "name": "Distributed", "value": "1" }
-      ]
-    },
+      {
+  "key": "ucl",
+  "name": "UEFA Champions League",
+  "record": { "holder": "Cristiano Ronaldo", "goals": "17", "season": "2013/14" },
+  "scorers": [
+    { "name": "Kylian Mbappé (Real Madrid)", "value": "5" },
+    { "name": "Harry Kane (Bayern Munich)", "value": "4" },
+    { "name": "Francisco Trincão (Sporting CP)", "value": "2" }
+  ],
+  "assisters": [
+    { "name": "Michael Olise (RB Salzburg)", "value": "2" },
+    { "name": "Hakan Çalhanoğlu (Inter Milan)", "value": "2" },
+    { "name": "Håkon Evjen (BSC Young Boys)", "value": "2" }
+  ]
+}
+
 
     /* ===== Your newly provided leagues & tournaments ===== */
 
