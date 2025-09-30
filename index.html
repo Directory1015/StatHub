@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -141,7 +141,7 @@
     .record{padding:12px 18px; border-bottom:1px dashed var(--divider); color:var(--tx-dim); font-size:13px; line-height:1.5}
     .record b{color:#ffd76a; text-shadow:0 0 10px rgba(255,215,106,.25)}
     .cols{display:grid; gap:18px; padding:16px 18px 6px}
-    .col h4{margin:0 0 8px; font-size:14px; letter-spacing:.2px; color:var(--tx); position:relative; padding-left:10px}
+    .col h4{margin:0 0 8px; font-size:14px; letter-spacing:.2px; color:#tx; position:relative; padding-left:10px}
     .col h4::before{content:""; position:absolute; left:0; top:50%; transform:translateY(-50%); width:4px; height:14px; border-radius:2px; background:var(--accent); box-shadow:0 0 10px color-mix(in oklab, var(--accent) 60%, transparent)}
     .list{list-style:none; margin:0; padding:0; display:grid; gap:8px}
     .row{display:grid; grid-template-columns:26px 1fr auto; gap:10px; align-items:center; padding:8px 10px; border:1px solid var(--divider); border-radius:12px; background:#121a2a}
@@ -346,15 +346,14 @@
         "name": "UEFA Champions League (2025/26 — Matchday 1)",
         "record": { "holder": "Cristiano Ronaldo", "goals": "17", "season": "2013/14" },
         "scorers": [
-          { "name": "Multiple players", "value": "3" },
-          { "name": "Multiple players", "value": "2" },
-          { "name": "Multiple players", "value": "2" }
+          { "name": "Kylian Mbappé (Real Madrid)", "value": "5" },
+          { "name": "Robert Lewandowski (Barcelona)", "value": "4" },
+          { "name": "Jonathan Burkardt (Mainz 05)", "value": "3" }
         ],
         "assisters": [
           { "name": "Distributed", "value": "1" }
         ]
       },
-
       {
         "key": "primeiraliga",
         "name": "Primeira Liga (2025/26)",
@@ -617,6 +616,16 @@
       ucl:        { src: 'assets/ucl.png',        fallback: '⭐',   alt: 'UEFA Champions League logo' }
     };
 
+    // Names for the six core tiles so they always render even if missing from leaders.json
+    const CORE_NAMES = {
+      epl:'Premier League',
+      laliga:'La Liga',
+      seriea:'Serie A',
+      bundesliga:'Bundesliga',
+      ligue1:'Ligue 1',
+      ucl:'UEFA Champions League'
+    };
+
     const DOMESTIC = [
       {key:'mls',          name:'Major League Soccer',         flag:'🇺🇸'},
       {key:'eredivisie',   name:'Eredivisie',                  flag:'🇳🇱'},
@@ -682,11 +691,14 @@
       });
     }
 
+    // === FIX: Always render the 6 core tiles, even if missing from leaders.json ===
     function renderTiles(DATA){
       const wrap = $('#tiles'); const bust = Date.now();
-      const core = DATA.competitions
-        .filter(c => CORE_TILE_KEYS.includes(c.key))
-        .sort((a,b) => CORE_TILE_KEYS.indexOf(a.key) - CORE_TILE_KEYS.indexOf(b.key));
+
+      const core = CORE_TILE_KEYS.map(k =>
+        DATA.competitions.find(c => c.key === k) ||
+        { key:k, name: CORE_NAMES[k], record:{holder:'—',goals:'—',season:'—'}, scorers:[], assisters:[] }
+      );
 
       wrap.innerHTML = core.map(c => {
         const logo = LOGOS[c.key] || { src:'', fallback:'🏆', alt:`${c.name} logo` };
@@ -707,8 +719,8 @@
         img.addEventListener('error', ()=>{ img.style.display='none'; emoji.style.display='block'; });
         btn.addEventListener('click', ()=>{
           openByKey(key, DATA);
-          const league = DATA.competitions.find(x=>x.key===key) || KEY_INFO[key];
-          if (league) updateShareLinks(key, league.name || league?.name);
+          const league = DATA.competitions.find(x=>x.key===key) || {name: CORE_NAMES[key]};
+          if (league) updateShareLinks(key, league.name || CORE_NAMES[key] || key.toUpperCase());
           history.replaceState(null,'',withLeagueParam(key));
         });
       });
@@ -717,8 +729,8 @@
       const urlKey = new URLSearchParams(location.search).get('league');
       if (urlKey) {
         openByKey(urlKey, DATA);
-        const info = DATA.competitions.find(x=>x.key===urlKey) || KEY_INFO[urlKey];
-        if (info) updateShareLinks(urlKey, info.name || info?.name);
+        const info = DATA.competitions.find(x=>x.key===urlKey) || {name: CORE_NAMES[urlKey] || (KEY_INFO[urlKey]?.name)};
+        if (info) updateShareLinks(urlKey, info.name || CORE_NAMES[urlKey] || (KEY_INFO[urlKey]?.name) || urlKey.toUpperCase());
       }
     }
 
@@ -734,8 +746,8 @@
       const league = DATA.competitions.find(x=>x.key===key);
       if (league) openModal(league, DATA.updated, false);
       else {
-        const info = KEY_INFO[key] || {name:key.toUpperCase(), flag:'🏆'};
-        const placeholder = { key, name: info.name, record:{holder:'—',goals:'—',season:'—'}, scorers:[], assisters:[] };
+        const infoName = CORE_NAMES[key] || (KEY_INFO[key]?.name) || key.toUpperCase();
+        const placeholder = { key, name: infoName, record:{holder:'—',goals:'—',season:'—'}, scorers:[], assisters:[] };
         openModal(placeholder, DATA.updated, true);
       }
     }
@@ -743,7 +755,7 @@
     function openModal(league, updated, isPlaceholder=false){
       const overlay = $('#overlay'); const modal = $('#modal');
       modal.setAttribute('data-key', league.key);
-      $('#mLeague').textContent = league.name || (KEY_INFO[league.key]?.name) || league.key.toUpperCase();
+      $('#mLeague').textContent = league.name || CORE_NAMES[league.key] || (KEY_INFO[league.key]?.name) || league.key.toUpperCase();
       $('#mDate').textContent = new Date(updated).toLocaleDateString();
 
       let rec = league.record?.holder && league.record.holder!=='—'
@@ -759,7 +771,7 @@
         const key = league.key;
         const template = {
           key,
-          name: (KEY_INFO[key]?.name) || key.toUpperCase(),
+          name: CORE_NAMES[key] || (KEY_INFO[key]?.name) || key.toUpperCase(),
           record: { holder: "—", goals: "—", season: "—" },
           scorers: [
             { "name": "Player A (Team)", "value": "0" },
@@ -773,7 +785,7 @@
           ]
         };
         noData.style.display='block';
-        noData.innerHTML = `<strong>No data yet for ${KEY_INFO[key]?.name || key.toUpperCase()}.</strong>
+        noData.innerHTML = `<strong>No data yet for ${CORE_NAMES[key] || (KEY_INFO[key]?.name) || key.toUpperCase()}.</strong>
           <div>Add this block to <code>leaders.json</code>:</div>
           <code>${JSON.stringify(template,null,2)}</code>`;
       } else {
@@ -790,7 +802,7 @@
         catch(e){ $('#shareStatus').textContent='Copy failed'; }
       };
 
-      updateShareLinks(key, league.name || (KEY_INFO[key]?.name) || key.toUpperCase());
+      updateShareLinks(key, league.name || CORE_NAMES[key] || (KEY_INFO[key]?.name) || key.toUpperCase());
       overlay.classList.add('active'); overlay.setAttribute('aria-hidden','false'); $('#mClose').focus();
     }
 
@@ -829,7 +841,7 @@
         `).join('');
         box.innerHTML=`
           <div class="top">
-            <div class="league"><div class="logo"><img src="${crest}" alt="StatHub"></div><span>${league.name || (KEY_INFO[league.key]?.name) || league.key.toUpperCase()}</span></div>
+            <div class="league"><div class="logo"><img src="${crest}" alt="StatHub"></div><span>${league.name || CORE_NAMES[league.key] || (KEY_INFO[league.key]?.name) || league.key.toUpperCase()}</span></div>
             <div class="date">${when}</div>
           </div>
           <div class="rec">
@@ -859,12 +871,12 @@
         const file = new File([blob], fileName, {type:'image/jpeg'});
         try{
           if (navigator.canShare && navigator.canShare({files:[file]})) {
-            await navigator.share({title: BRAND, text:`${league.name || league.key.toUpperCase()} leaders`, files:[file]});
+            await navigator.share({title: BRAND, text:`${league.name || CORE_NAMES[league.key] || league.key.toUpperCase()} leaders`, files:[file]});
             return;
           }
         }catch(_){} // ignore
         if (navigator.share){
-          await navigator.share({ title: BRAND, text:`${league.name || league.key.toUpperCase()} leaders`, url: withLeagueParam(league.key) });
+          await navigator.share({ title: BRAND, text:`${league.name || CORE_NAMES[league.key] || league.key.toUpperCase()} leaders`, url: withLeagueParam(league.key) });
           return;
         }
         try{
@@ -887,10 +899,6 @@
   </script>
 </body>
 </html>
-
-
-
-
 
 
 
