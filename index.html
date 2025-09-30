@@ -4,15 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>StatHub — Home</title>
-  <meta name="description" content="StatHub — tap a league circle to view and share current player leaders." />
+  <meta name="description" content="StatHub — tap a league circle or choose from the dropdown to view current player leaders." />
   <link rel="icon" type="image/svg+xml" href="assets/stathub-logo-crest.svg" />
   <style>
     :root{
       --bg:#0b0d12; --panel:#111724; --panel2:#0f1522;
       --tx:#e8edf7; --tx-dim:#a6b0c3; --divider:#27324a;
-      --maxw:1200px; --brand:#5aa2ff;
+      --maxw:1200px; --brand:#5aa2ff; --accent:#00d2ff;
       --shadow:0 8px 26px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
-      --accent:#00d2ff;
     }
     *{box-sizing:border-box}
     body{
@@ -24,19 +23,30 @@
       color:var(--tx);
     }
 
+    /* ===== Header (big glowing crest only) ===== */
     header{
       display:flex; align-items:center; justify-content:center; gap:12px;
       padding:24px 14px 6px; flex-wrap:wrap;
     }
-    .brand{display:inline-flex; align-items:center; gap:10px; background:#0e1422; border:1px solid var(--divider);
-      padding:6px 10px; border-radius:999px; box-shadow:var(--shadow)}
-    .brand img{width:26px; height:26px; display:block}
-    .brand span{font-weight:900; letter-spacing:.3px; font-size:14px; color:#cfe2ff}
+    h1{display:none}
+    .brandBadge{
+      width:96px; height:96px; border-radius:50%;
+      display:grid; place-items:center;
+      background:#0e1422; border:1px solid var(--divider);
+      box-shadow:0 0 0 8px rgba(90,162,255,.08), 0 14px 32px rgba(0,0,0,.55), 0 0 36px rgba(0,210,255,.35);
+      position:relative; isolation:isolate;
+    }
+    .brandBadge::before{
+      content:""; position:absolute; inset:-10px; border-radius:inherit;
+      background:radial-gradient(60% 60% at 50% 30%, rgba(90,162,255,.28), transparent 60%);
+      filter:blur(10px); z-index:-1;
+    }
+    .brandBadge img{ width:72px; height:auto; display:block; filter:drop-shadow(0 2px 4px rgba(0,0,0,.45)) }
+    @media (max-width:480px){ .brandBadge{width:84px;height:84px} .brandBadge img{width:64px} }
 
-    h1{margin:6px 0 4px; font-size:clamp(30px,5vw,42px); text-shadow:0 0 14px rgba(90,162,255,.4)}
-    .tag{color:var(--tx-dim); font-size:14px; width:100%; text-align:center; margin:0 0 8px}
+    .tag{color:var(--tx-dim); font-size:14px; width:100%; text-align:center; margin:6px 0 8px}
 
-    /* Toolbar with dropdown */
+    /* ===== Toolbar / Dropdown ===== */
     .toolbar{display:flex; gap:10px; justify-content:center; padding:0 14px 6px; flex-wrap:wrap}
     .ddBtn{
       display:inline-flex; align-items:center; gap:8px;
@@ -47,13 +57,13 @@
     .ddWrap{position:relative}
     .ddPanel{
       position:absolute; left:50%; transform:translateX(-50%);
-      margin-top:8px; width:min(780px, 96vw); z-index:60; display:none;
+      margin-top:8px; width:min(820px, 96vw); z-index:60; display:none;
       background:linear-gradient(180deg,#111724,#0f1522);
       border:1px solid var(--divider); border-radius:14px; box-shadow:0 18px 40px rgba(0,0,0,.55);
       padding:12px;
     }
     .ddPanel.open{display:block}
-    .ddGrid{display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));}
+    .ddGrid{display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));}
     .ddSec{background:#101729; border:1px solid var(--divider); border-radius:12px; padding:10px}
     .ddSec h4{margin:0 0 8px; font-size:13px; color:#cfe2ff; letter-spacing:.3px}
     .ddList{list-style:none; margin:0; padding:0; display:grid; gap:6px}
@@ -64,44 +74,34 @@
     }
     .ddItem:hover{border-color:#33405b; background:#182034}
     .flag{font-size:16px; width:20px; text-align:center}
-    .note{color:#a6b0c3; font-weight:700; font-size:11.5px; margin-left:auto; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:44%}
+    .note{color:#a6b0c3; font-weight:700; font-size:11.5px; margin-left:auto; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:50%}
 
+    /* ===== Grid of main circles (core only) ===== */
     .shell{max-width:var(--maxw); margin:0 auto; padding:12px 20px 40px}
     .grid{
       display:grid; gap:26px;
       grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
       justify-content:center; justify-items:center; align-items:start;
     }
-    @media (max-width: 900px){ .grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
-    @media (max-width: 640px){ .grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:900px){ .grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+    @media (max-width:640px){ .grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
 
-    /* circle tiles */
     .tile{
-      --accent:#5aa2ff;
-      width:140px; height:140px; border-radius:50%;
+      --accent:#5aa2ff; width:140px; height:140px; border-radius:50%;
       background:linear-gradient(180deg,#111724,#0f1522);
-      border:2px solid var(--divider);
-      box-shadow:var(--shadow);
+      border:2px solid var(--divider); box-shadow:var(--shadow);
       display:flex; align-items:center; justify-content:center; flex-direction:column;
-      cursor:pointer; transition:.2s; position:relative; color:inherit;
-      touch-action:manipulation;
+      cursor:pointer; transition:.2s; position:relative; color:inherit; touch-action:manipulation;
     }
-    @media (prefers-reduced-motion:reduce){ .tile{transition:none} }
-    .tile:hover{
-      transform: translateY(-6px) scale(1.05);
-      border-color:var(--accent);
-      box-shadow:0 14px 30px rgba(0,0,0,.45), 0 0 16px color-mix(in oklab, var(--accent) 45%, transparent);
-    }
-
+    .tile:hover{ transform:translateY(-6px) scale(1.05); border-color:var(--accent);
+      box-shadow:0 14px 30px rgba(0,0,0,.45), 0 0 16px color-mix(in oklab, var(--accent) 45%, transparent) }
     .logoBox{
       width:70px; height:70px; margin-bottom:8px; display:grid; place-items:center; border-radius:50%;
-      background:#0e1422; border:1px solid var(--divider); box-shadow:inset 0 0 18px rgba(90,162,255,.15);
-      overflow:hidden;
+      background:#0e1422; border:1px solid var(--divider); box-shadow:inset 0 0 18px rgba(90,162,255,.15); overflow:hidden;
     }
-    .logoImg{ max-width:64px; max-height:64px; width:auto; height:auto; object-fit:contain; display:block; filter:drop-shadow(0 2px 4px rgba(0,0,0,.45)) }
+    .logoImg{ max-width:64px; max-height:64px; object-fit:contain; display:block; filter:drop-shadow(0 2px 4px rgba(0,0,0,.45)) }
     .logoEmoji{ font-size:40px; line-height:1; display:none }
     .tileName{ font-weight:900; font-size:14px; text-align:center }
-
     .tile[data-key="epl"]{--accent:#5c2d91}
     .tile[data-key="laliga"]{--accent:#ea1d2c}
     .tile[data-key="seriea"]{--accent:#0e5adf}
@@ -109,7 +109,7 @@
     .tile[data-key="ligue1"]{--accent:#cedc00}
     .tile[data-key="ucl"]{--accent:#1b2d6b}
 
-    /* modal */
+    /* ===== Modal ===== */
     .overlay{position:fixed; inset:0; background:rgba(0,0,0,.70); display:none; align-items:center; justify-content:center; z-index:200}
     .overlay.active{display:flex}
     .modal{ --accent:#5aa2ff; width:min(700px,92vw); max-height:90vh; overflow:auto;
@@ -129,41 +129,33 @@
     .record b{color:#ffd76a; text-shadow:0 0 10px rgba(255,215,106,.25)}
     .cols{display:grid; gap:18px; padding:16px 18px 6px}
     .col h4{margin:0 0 8px; font-size:14px; letter-spacing:.2px; color:var(--tx); position:relative; padding-left:10px}
-    .col h4::before{content:""; position:absolute; left:0; top:50%; transform:translateY(-50%); width:4px; height:14px; border-radius:2px;
-      background:var(--accent); box-shadow:0 0 10px color-mix(in oklab, var(--accent) 60%, transparent)}
+    .col h4::before{content:""; position:absolute; left:0; top:50%; transform:translateY(-50%); width:4px; height:14px; border-radius:2px; background:var(--accent); box-shadow:0 0 10px color-mix(in oklab, var(--accent) 60%, transparent)}
     .list{list-style:none; margin:0; padding:0; display:grid; gap:8px}
-    .row{display:grid; grid-template-columns:26px 1fr auto; gap:10px; align-items:center; padding:8px 10px; border:1px solid var(--divider);
-      border-radius:12px; background:#121a2a}
+    .row{display:grid; grid-template-columns:26px 1fr auto; gap:10px; align-items:center; padding:8px 10px; border:1px solid var(--divider); border-radius:12px; background:#121a2a}
     .row:hover{border-color:#33405b; background:#182034}
-    .idx{width:24px; height:24px; border-radius:50%; display:grid; place-items:center; font-weight:900; color:#aeb7cc;
-      background:rgba(255,255,255,.05); border:1px solid var(--divider)}
+    .idx{width:24px; height:24px; border-radius:50%; display:grid; place-items:center; font-weight:900; color:#aeb7cc; background:rgba(255,255,255,.05); border:1px solid var(--divider)}
     .nm{font-weight:800; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-    .val{font-weight:900; font-size:13px; color:#cfe2ff; padding:2px 10px; border-radius:999px; border:1px solid var(--divider);
-      background:#0f1522; min-width:34px; text-align:center}
+    .val{font-weight:900; font-size:13px; color:#cfe2ff; padding:2px 10px; border-radius:999px; border:1px solid var(--divider); background:#0f1522; min-width:34px; text-align:center}
     .row:first-child .idx{background:linear-gradient(180deg,#2a2230,#3a2a12); border-color:#6b5320; color:#ffd76a}
     .row:first-child .nm::before{content:"👑 "}
 
     .shareBar{display:flex; gap:10px; flex-wrap:wrap; padding:12px 18px 16px; border-top:1px solid var(--divider)}
-    .btn{display:inline-flex; align-items:center; gap:8px; background:#121a2a; border:1px solid var(--divider); color:#fff;
-      padding:8px 10px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; touch-action:manipulation}
+    .btn{display:inline-flex; align-items:center; gap:8px; background:#121a2a; border:1px solid var(--divider); color:#fff; padding:8px 10px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer}
     .btn:hover{border-color:var(--brand)}
     .shareLinks{display:flex; gap:10px; padding:0 18px 18px}
     .shareLinks a{font-size:13px; color:#cfe2ff; text-decoration:none; border:1px solid var(--divider); padding:6px 8px; border-radius:8px}
     .shareLinks a:hover{border-color:var(--brand)}
-
     footer{text-align:center; color:#a6b0c3; padding:20px; font-size:12px; border-top:1px solid rgba(255,255,255,.05)}
 
-    /* export card (for jpeg capture) */
+    /* ===== Export card (for jpeg capture) ===== */
     .shareCard{
-      position:relative;
-      width:1080px; padding:36px 36px 28px; border-radius:24px;
+      position:relative; width:1080px; padding:36px 36px 28px; border-radius:24px;
       background: radial-gradient(1200px 600px at 50% -10%, rgba(90,162,255,.18), transparent 60%), #0b0d12;
       color:#e8edf7; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; border:2px solid #27324a;
     }
     .shareCard .top{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px}
     .shareCard .league{display:flex; align-items:center; gap:14px; font-weight:900; font-size:40px}
-    .shareCard .logo{width:72px; height:72px; border-radius:14px; overflow:hidden; display:grid; place-items:center;
-      background:#0e1422; border:1px solid #27324a}
+    .shareCard .logo{width:72px; height:72px; border-radius:14px; overflow:hidden; display:grid; place-items:center; background:#0e1422; border:1px solid #27324a}
     .shareCard .logo img{max-width:68px; max-height:68px}
     .shareCard .date{color:#a6b0c3; font-weight:700}
     .shareCard .rec{margin:8px 0 18px; color:#a6b0c3; font-size:24px}
@@ -177,21 +169,18 @@
     .shareCard .v{font-weight:900; font-size:22px; color:#cfe2ff; text-align:center}
     .wm{position:absolute; right:24px; bottom:24px; width:72px; height:auto; opacity:.9; filter: drop-shadow(0 2px 6px rgba(0,0,0,.5));}
 
-    /* Placeholder helper */
-    .noData{
-      margin:8px 18px 0; padding:10px 12px; border:1px dashed var(--divider); border-radius:12px; background:#101729; color:#cfe2ff; font-size:12.5px
-    }
+    .noData{margin:8px 18px 0; padding:10px 12px; border:1px dashed var(--divider); border-radius:12px; background:#101729; color:#cfe2ff; font-size:12.5px}
     .noData code{white-space:pre-wrap; display:block; background:#0f1522; border:1px solid #27324a; padding:8px; border-radius:8px; color:#e8edf7}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
 </head>
 <body>
   <header>
-    <span class="brand">
-      <img src="assets/stathub-logo-crest.svg" alt="StatHub logo">
-      <span>StatHub</span>
-    </span>
-    <h1>StatHub</h1>
+    <!-- Big glowing crest -->
+    <a class="brandBadge" href="./" aria-label="StatHub">
+      <img src="assets/stathub-logo-crest.svg" alt="">
+    </a>
+
     <p class="tag">Tap a league circle or choose from the dropdown to view current <b>player</b> leaders.</p>
 
     <!-- Dropdown -->
@@ -256,35 +245,117 @@
     </div>
   </div>
 
-  <!-- Fallback JSON (if leaders.json fails) -->
+  <!-- Fallback JSON includes your new leagues & stats so dropdown items work even if leaders.json isn't updated yet -->
   <script type="application/json" id="leaders-fallback">
-  {"updated":"2025-09-28","competitions":[
-    {"key":"epl","name":"Premier League","record":{"holder":"Erling Haaland","goals":"36","season":"2022/23"},
-      "scorers":[{"name":"Erling Haaland (Man City)","value":"8"},{"name":"Antoine Semenyo (Bournemouth)","value":"4"},{"name":"Jaidon Anthony (Burnley)","value":"4"}],
-      "assisters":[{"name":"Jack Grealish (Everton)","value":"4"},{"name":"Mohammed Kudus (Tottenham Hotspur)","value":"4"},{"name":"El Hadji Malick Diouf (West Ham United)","value":"3"}]},
-    {"key":"laliga","name":"La Liga","record":{"holder":"Lionel Messi","goals":"50","season":"2011/12"},
-      "scorers":[{"name":"Kylian Mbappé (Real Madrid)","value":"8"},{"name":"Julián Álvarez (Atl. Madrid)","value":"6"},{"name":"Etta Eyong (Levante)","value":"4"}],
-      "assisters":[{"name":"Vinícius Júnior (Real Madrid)","value":"4"},{"name":"Luis Milla (Getafe)","value":"4"},{"name":"Lamine Yamal (Barcelona)","value":"3"}]},
-    {"key":"seriea","name":"Serie A","record":{"holder":"Ciro Immobile","goals":"36","season":"2019/20"},
-      "scorers":[{"name":"Christian Pulisic (AC Milan)","value":"4"},{"name":"Nico Paz (Como)","value":"3"},{"name":"Marcus Thuram (Inter)","value":"3"}],
-      "assisters":[{"name":"Kenan Yıldız (Juventus Turin)","value":"3"},{"name":"Nico Paz (Como 1907)","value":"3"},{"name":"Nikola Krstović (Atalanta Bergamo)","value":"3"}]},
-    {"key":"bundesliga","name":"Bundesliga","record":{"holder":"Robert Lewandowski","goals":"41","season":"2020/21"},
-      "scorers":[{"name":"Harry Kane (Bayern Munich)","value":"10"},{"name":"Can Uzun (Eintracht Frankfurt)","value":"5"},{"name":"Fisnik Asllani (Hoffenheim)","value":"4"}],
-      "assisters":[{"name":"Andrej Ilic (1. FC Union Berlin)","value":"4"},{"name":"Samuel Mbangula (SV Werder Bremen)","value":"3"},{"name":"Ritsu Doan (Eintracht Frankfurt)","value":"3"}]},
-    {"key":"ligue1","name":"Ligue 1","record":{"holder":"Kylian Mbappé","goals":"27","season":"2018/19"},
-      "scorers":[{"name":"Ansu Fati (Monaco)","value":"3"},{"name":"Pierre-Emerick Aubameyang (Marseille)","value":"3"},{"name":"Bradley Barcola (PSG)","value":"3"}],
-      "assisters":[{"name":"Ludovic Ajorque (Stade Brest 29)","value":"4"},{"name":"Dilane Bakwa (RC Strasbourg Alsace)","value":"3"},{"name":"Félix Correia (LOSC Lille)","value":"3"}]},
-    {"key":"ucl","name":"UEFA Champions League","record":{"holder":"Cristiano Ronaldo","goals":"17","season":"2013/14"},
-      "scorers":[{"name":"Kylian Mbappé (Real Madrid)","value":"5"},{"name":"Francisco Trincão (Sporting CP)","value":"2"},{"name":"Marcos Llorente (Atlético Madrid)","value":"2"}],
-      "assisters":[{"name":"Lukáš Provod (Slavia Praha)","value":"2"},{"name":"Hakan Çalhanoğlu (Inter Milan)","value":"2"},{"name":"Lamine Yamal (Barcelona)","value":"1"}]}
-  ]}
+  {
+    "updated": "2025-09-30",
+    "competitions": [
+      { "key":"epl","name":"Premier League","record":{"holder":"Erling Haaland","goals":"36","season":"2022/23"},
+        "scorers":[{"name":"Erling Haaland (Man City)","value":"8"},{"name":"Antoine Semenyo (Bournemouth)","value":"4"},{"name":"Jaidon Anthony (Burnley)","value":"4"}],
+        "assisters":[{"name":"Jack Grealish (Everton)","value":"4"},{"name":"Mohammed Kudus (Tottenham Hotspur)","value":"3"},{"name":"El Hadji Malick Diouf (West Ham United)","value":"3"}]},
+      { "key":"laliga","name":"La Liga","record":{"holder":"Lionel Messi","goals":"50","season":"2011/12"},
+        "scorers":[{"name":"Kylian Mbappé (Real Madrid)","value":"8"},{"name":"Julián Álvarez (Atl. Madrid)","value":"6"},{"name":"Etta Eyong (Levante)","value":"4"}],
+        "assisters":[{"name":"Vinícius Júnior (Real Madrid)","value":"4"},{"name":"Luis Milla (Getafe)","value":"4"},{"name":"Lamine Yamal (Barcelona)","value":"3"}]},
+      { "key":"seriea","name":"Serie A","record":{"holder":"Ciro Immobile","goals":"36","season":"2019/20"},
+        "scorers":[{"name":"Christian Pulisic (AC Milan)","value":"4"},{"name":"Nico Paz (Como)","value":"3"},{"name":"Marcus Thuram (Inter)","value":"3"}],
+        "assisters":[{"name":"Kenan Yıldız (Juventus Turin)","value":"3"},{"name":"Nico Paz (Como 1907)","value":"3"},{"name":"Nikola Krstović (Atalanta Bergamo)","value":"3"}]},
+      { "key":"bundesliga","name":"Bundesliga","record":{"holder":"Robert Lewandowski","goals":"41","season":"2020/21"},
+        "scorers":[{"name":"Harry Kane (Bayern Munich)","value":"10"},{"name":"Can Uzun (Eintracht Frankfurt)","value":"5"},{"name":"Fisnik Asllani (Hoffenheim)","value":"4"}],
+        "assisters":[{"name":"Andrej Ilic (1. FC Union Berlin)","value":"4"},{"name":"Samuel Mbangula (SV Werder Bremen)","value":"3"},{"name":"Ritsu Doan (Eintracht Frankfurt)","value":"3"}]},
+      { "key":"ligue1","name":"Ligue 1","record":{"holder":"Kylian Mbappé","goals":"27","season":"2018/19"},
+        "scorers":[{"name":"Ansu Fati (Monaco)","value":"3"},{"name":"Pierre-Emerick Aubameyang (Marseille)","value":"3"},{"name":"Bradley Barcola (PSG)","value":"3"}],
+        "assisters":[{"name":"Ludovic Ajorque (Stade Brest 29)","value":"4"},{"name":"Dilane Bakwa (RC Strasbourg Alsace)","value":"3"},{"name":"Félix Correia (LOSC Lille)","value":"3"}]},
+      { "key":"ucl","name":"UEFA Champions League (2025/26 — Matchday 1)","record":{"holder":"Cristiano Ronaldo","goals":"17","season":"2013/14"},
+        "scorers":[{"name":"Multiple players","value":"3"},{"name":"Multiple players","value":"2"},{"name":"Multiple players","value":"2"}],
+        "assisters":[{"name":"Distributed","value":"1"}]},
+
+      /* === Your added leagues with stats === */
+      { "key":"primeiraliga","name":"Primeira Liga (2025/26)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Clayton (Rio Ave)","value":"5"},{"name":"Guilherme Schettine (Moreirense)","value":"5"},{"name":"Silva C. (Benfica)","value":"5"}],
+        "assisters":[{"name":"Alberto Costa (Porto)","value":"4"},{"name":"Leonardo Lelo (Braga)","value":"4"}]},
+
+      { "key":"saudi","name":"Saudi Pro League (2025/26)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"João Félix (Al-Hilal)","value":"5"},{"name":"Multiple players","value":"4"},{"name":"Multiple players","value":"4"}],
+        "assisters":[{"name":"Kingsley Coman (Al-Nassr)","value":"—"}]},
+
+      { "key":"brasileirao","name":"Brasileirão Série A (2025)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Kaio Jorge (Cruzeiro)","value":"15"},{"name":"De Arrascaeta G. (Flamengo)","value":"13"},{"name":"Vegetti P. (Vasco da Gama)","value":"12"}],
+        "assisters":[{"name":"Gabigol (Flamengo)","value":"—"}]},
+
+      { "key":"argprimera","name":"Argentine Primera División (2025)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Tomás Molina (Banfield)","value":"12"},{"name":"Adrián Emmanuel Martínez (Rosario Central)","value":"10"},{"name":"Andrés Vombergar (Platense)","value":"10"}],
+        "assisters":[{"name":"Javier Ruiz (Barracas Central)","value":"6"}]},
+
+      { "key":"ligamx","name":"Liga MX Apertura (2025)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Paulinho (Toluca)","value":"—"}],
+        "assisters":[{"name":"José Paradela","value":"5"},{"name":"Diego González","value":"4"},{"name":"Nicolás Castro","value":"4"}]},
+
+      { "key":"j1","name":"J1 League (2025)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Leo Ceará (Cerezo Osaka)","value":"17"},{"name":"Rafael Ratão (Kashima Antlers)","value":"11"},{"name":"Rafael Papagaio (Kyoto Sanga)","value":"9"}],
+        "assisters":[{"name":"Lucas Fernandes (Urawa Reds)","value":"—"}]},
+
+      { "key":"rpl","name":"Russian Premier League (2025/26)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Aleksey Batrakov (Rubin Kazan)","value":"8"},{"name":"Mirlind Daku (Rubin Kazan)","value":"8"}],
+        "assisters":[{"name":"Eduard Spertsyan (Krasnodar)","value":"—"}]},
+
+      { "key":"superlig","name":"Turkish Süper Lig (2025/26)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Mauro Icardi (Galatasaray)","value":"5"},{"name":"Tied group","value":"5"},{"name":"Tied group","value":"5"}],
+        "assisters":[{"name":"Mortadha Ben Ouanes (Fenerbahçe)","value":"—"},{"name":"Alexandru Maxim (Fenerbahçe)","value":"—"}]},
+
+      { "key":"jpl","name":"Belgian Pro League (2025/26)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Thorgan Hazard (Anderlecht)","value":"2"},{"name":"Multiple players","value":"2"}],
+        "assisters":[{"name":"Nilson Angulo (Anderlecht)","value":"4"},{"name":"Jarne Steuckers (Genk)","value":"4"}]},
+
+      { "key":"scottish","name":"Scottish Premiership (2025/26)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Ivan Dolček (Dundee United)","value":"5"},{"name":"Lawrence Shankland (Hearts)","value":"4"},{"name":"Emmanuel Longelo (Motherwell)","value":"3"}],
+        "assisters":[{"name":"Cameron Congreve (Dundee)","value":"—"}]},
+
+      { "key":"upl","name":"Ukrainian Premier League (2025/26)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Pylyp Budkivskyi (Kolos Kovalivka)","value":"4"},{"name":"Vitaliy Buyalskyy (Dynamo Kyiv)","value":"3"}],
+        "assisters":[{"name":"Gleiker Mendoza (LNZ Cherkasy)","value":"—"}]},
+
+      { "key":"efl","name":"EFL Championship (2025/26)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Haji Wright (Coventry City)","value":"5"},{"name":"Josh Sargent (Norwich City)","value":"5"}],
+        "assisters":[{"name":"Milan van Ewijk (Coventry City)","value":"—"}]},
+
+      { "key":"uel","name":"UEFA Europa League (2025/26)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Bruno Fernandes","value":"—"}],
+        "assisters":[{"name":"Rayan Cherki","value":"—"}]},
+
+      { "key":"uecl","name":"UEFA Conference League (2025/26)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Afimico Pululu","value":"—"}],
+        "assisters":[{"name":"Data limited","value":"—"}]},
+
+      { "key":"conmebol_wcq","name":"CONMEBOL World Cup Qualifiers (Ongoing)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Lionel Messi (Argentina)","value":"8"},{"name":"Luis Díaz (Colombia)","value":"7"},{"name":"Miguel Terceros (Bolivia)","value":"7"}],
+        "assisters":[{"name":"Lionel Messi (Argentina)","value":"2"}]},
+
+      { "key":"afc_wcq","name":"AFC World Cup Qualifiers (Ongoing)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Son Heung-min (South Korea)","value":"—"}],
+        "assisters":[{"name":"Data limited","value":"—"}]},
+
+      { "key":"caf_wcq","name":"CAF World Cup Qualifiers (Ongoing)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Mohamed Salah (Egypt)","value":"6"},{"name":"Jordan Ayew (Ghana)","value":"5"},{"name":"Mohamed Amoura (Algeria)","value":"5"}],
+        "assisters":[{"name":"Jordan Ayew (Ghana)","value":"4"},{"name":"Mohamed Salah (Egypt)","value":"3"}]},
+
+      { "key":"uefa_wcq","name":"UEFA European Qualifiers for 2026 World Cup (Sep 2025)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Erling Haaland (Norway)","value":"9"},{"name":"Andrej Kramarić (Croatia)","value":"6"},{"name":"Patrik Schick (Czechia)","value":"4"}],
+        "assisters":[{"name":"Martin Ødegaard (Norway)","value":"7"},{"name":"Sorba Thomas (Wales)","value":"4"},{"name":"Declan Rice (England)","value":"4"}]},
+
+      { "key":"nations","name":"UEFA Nations League (Ongoing)","record":{"holder":"—","goals":"—","season":"—"},
+        "scorers":[{"name":"Viktor Gyökeres (Sweden)","value":"9"},{"name":"Cristiano Ronaldo (Portugal)","value":"8"},{"name":"Erling Haaland (Norway)","value":"7"}],
+        "assisters":[{"name":"Nuno Mendes (Portugal)","value":"6"},{"name":"Joshua Kimmich (Germany)","value":"6"}]}
+    ]
+  }
   </script>
 
   <script>
     const $ = (s, r=document)=>r.querySelector(s);
     const BRAND = 'StatHub';
 
-    /* Logos for the main tiles */
+    // Only these appear as home circles; everything else stays in the dropdown
+    const CORE_TILE_KEYS = ['epl','laliga','seriea','bundesliga','ligue1','ucl'];
+
     const LOGOS = {
       epl:        { src: 'assets/epl.png',        fallback: '🇬🇧', alt: 'Premier League logo' },
       laliga:     { src: 'assets/laliga.png',     fallback: '🇪🇸', alt: 'La Liga logo' },
@@ -294,7 +365,7 @@
       ucl:        { src: 'assets/ucl.png',        fallback: '⭐',   alt: 'UEFA Champions League logo' }
     };
 
-    /* ===== Dropdown data ===== */
+    // Dropdown lists
     const DOMESTIC = [
       {key:'mls',          name:'Major League Soccer',         flag:'🇺🇸'},
       {key:'eredivisie',   name:'Eredivisie',                  flag:'🇳🇱'},
@@ -311,7 +382,6 @@
       {key:'upl',          name:'Ukrainian Premier League',    flag:'🇺🇦'},
       {key:'efl',          name:'EFL Championship',            flag:'🏴'}
     ];
-
     const CUPS = [
       {key:'ucl',           name:'UEFA Champions League',         flag:'⭐', note:'Matchday 1: Sep 16–18, 2025'},
       {key:'uel',           name:'UEFA Europa League',            flag:'🏟️', note:'Ongoing league phase'},
@@ -322,10 +392,7 @@
       {key:'uefa_wcq',      name:'UEFA European Qualifiers',      flag:'🇪🇺', note:'MD 5–6: Sep 4–9, 2025'},
       {key:'nations',       name:'UEFA Nations League',           flag:'🇪🇺', note:'Ongoing group stages'}
     ];
-
-    /* Lookup for names/notes when a key isn't in leaders.json yet */
-    const KEY_INFO = {};
-    [...DOMESTIC, ...CUPS].forEach(x => KEY_INFO[x.key] = x);
+    const KEY_INFO = {}; [...DOMESTIC, ...CUPS].forEach(x => KEY_INFO[x.key] = x);
 
     async function getData(){
       try{
@@ -340,7 +407,6 @@
       }
     }
 
-    /* ===== Dropdown render and behavior ===== */
     function renderDropdown(){
       const makeItem = ({key, name, flag, note}) => `
         <button class="ddItem" data-key="${key}" role="menuitem">
@@ -351,39 +417,28 @@
       $('#ddDomestic').innerHTML = DOMESTIC.map(makeItem).join('');
       $('#ddCups').innerHTML     = CUPS.map(makeItem).join('');
 
-      const panel = $('#morePanel');
-      const btn = $('#moreBtn');
-      const toggle = (open) => {
-        panel.classList.toggle('open', open);
-        btn.setAttribute('aria-expanded', String(open));
-      };
-
-      btn.addEventListener('click', (e)=>{
-        e.stopPropagation();
-        toggle(!panel.classList.contains('open'));
-      });
-      document.addEventListener('click', (e)=>{
-        if (!panel.contains(e.target) && e.target !== btn) toggle(false);
-      });
+      const panel = $('#morePanel'); const btn = $('#moreBtn');
+      const toggle = (open) => { panel.classList.toggle('open', open); btn.setAttribute('aria-expanded', String(open)); };
+      btn.addEventListener('click', (e)=>{ e.stopPropagation(); toggle(!panel.classList.contains('open')); });
+      document.addEventListener('click', (e)=>{ if (!panel.contains(e.target) && e.target !== btn) toggle(false); });
     }
 
     function hookDropdownClicks(DATA){
       $('#morePanel').addEventListener('click', (e)=>{
-        const el = e.target.closest('.ddItem');
-        if (!el) return;
+        const el = e.target.closest('.ddItem'); if (!el) return;
         const key = el.getAttribute('data-key');
         openByKey(key, DATA);
-        // close panel
-        $('#morePanel').classList.remove('open');
-        $('#moreBtn').setAttribute('aria-expanded','false');
+        $('#morePanel').classList.remove('open'); $('#moreBtn').setAttribute('aria-expanded','false');
       });
     }
 
-    /* ===== Main tiles ===== */
     function renderTiles(DATA){
-      const wrap = $('#tiles');
-      const bust = Date.now();
-      wrap.innerHTML = DATA.competitions.map(c => {
+      const wrap = $('#tiles'); const bust = Date.now();
+      const core = DATA.competitions
+        .filter(c => CORE_TILE_KEYS.includes(c.key))
+        .sort((a,b) => CORE_TILE_KEYS.indexOf(a.key) - CORE_TILE_KEYS.indexOf(b.key));
+
+      wrap.innerHTML = core.map(c => {
         const logo = LOGOS[c.key] || { src:'', fallback:'🏆', alt:`${c.name} logo` };
         return `
           <button class="tile" data-key="${c.key}" aria-label="${c.name}" title="${c.name}">
@@ -398,18 +453,17 @@
 
       wrap.querySelectorAll('.tile').forEach(btn=>{
         const key = btn.getAttribute('data-key');
-        const img = btn.querySelector('.logoImg');
-        const emoji = btn.querySelector('.logoEmoji');
+        const img = btn.querySelector('.logoImg'); const emoji = btn.querySelector('.logoEmoji');
         img.addEventListener('error', ()=>{ img.style.display='none'; emoji.style.display='block'; });
         btn.addEventListener('click', ()=>{
           openByKey(key, DATA);
           const league = DATA.competitions.find(x=>x.key===key) || KEY_INFO[key];
           if (league) updateShareLinks(key, league.name || league?.name);
-          history.replaceState(null, '', withLeagueParam(key));
+          history.replaceState(null,'',withLeagueParam(key));
         });
       });
 
-      // Deep link support (?league=key)
+      // Deep link (?league=key)
       const urlKey = new URLSearchParams(location.search).get('league');
       if (urlKey) {
         openByKey(urlKey, DATA);
@@ -418,36 +472,21 @@
       }
     }
 
-    function listHTML(arr){
-      return arr.map((p,i)=>`
-        <li class="row">
-          <span class="idx">${i+1}</span>
-          <span class="nm">${p.name}</span>
-          <span class="val">${p.value}</span>
-        </li>
-      `).join('');
-    }
+    function listHTML(arr){ return (arr||[]).map((p,i)=>`
+      <li class="row"><span class="idx">${i+1}</span><span class="nm">${p.name}</span><span class="val">${p.value}</span></li>
+    `).join(''); }
 
     function withLeagueParam(key){
-      const u = new URL(location.href);
-      u.searchParams.set('league', key);
-      return u.toString();
+      const u = new URL(location.href); u.searchParams.set('league', key); return u.toString();
     }
 
     function openByKey(key, DATA){
       const league = DATA.competitions.find(x=>x.key===key);
-      if (league) {
-        openModal(league, DATA.updated, /*placeholder*/false);
-      } else {
+      if (league) openModal(league, DATA.updated, false);
+      else {
         const info = KEY_INFO[key] || {name:key.toUpperCase(), flag:'🏆'};
-        const placeholder = {
-          key,
-          name: info.name,
-          record: { holder:'—', goals:'—', season:'—' },
-          scorers: [],
-          assisters: []
-        };
-        openModal(placeholder, DATA.updated, /*placeholder*/true, info.note);
+        const placeholder = { key, name: info.name, record:{holder:'—',goals:'—',season:'—'}, scorers:[], assisters:[] };
+        openModal(placeholder, DATA.updated, true, info.note);
       }
     }
 
@@ -457,19 +496,17 @@
       $('#mLeague').textContent = league.name || (KEY_INFO[league.key]?.name) || league.key.toUpperCase();
       $('#mDate').textContent = new Date(updated).toLocaleDateString();
 
-      let rec = `All-time single-season record: ${league.record?.holder && league.record.holder!=='—'
-                  ? `<b>${league.record.holder}</b> • ${league.record.goals} goals • ${league.record.season}`
-                  : `<span class="muted">—</span>`}`;
+      let rec = league.record?.holder && league.record.holder!=='—'
+        ? `All-time single-season record: <b>${league.record.holder}</b> • ${league.record.goals} goals • ${league.record.season}`
+        : `All-time single-season record: —`;
       if (noteText) rec += `<div class="muted" style="margin-top:4px">${noteText}</div>`;
       $('#mRecord').innerHTML = rec;
 
-      // Lists
       $('#mScorers').innerHTML   = listHTML(league.scorers || []);
       $('#mAssisters').innerHTML = listHTML(league.assisters || []);
 
-      // No data helper
       const noData = $('#noDataBox');
-      if (isPlaceholder || (!league.scorers?.length && !league.assisters?.length)) {
+      if (isPlaceholder || ((!league.scorers || league.scorers.length===0) && (!league.assisters || league.assisters.length===0))){
         const key = league.key;
         const template = {
           key,
@@ -486,18 +523,14 @@
             { "name": "Player F (Team)", "value": "0" }
           ]
         };
-        noData.style.display = 'block';
-        noData.innerHTML = `
-          <strong>No data yet for ${KEY_INFO[key]?.name || key.toUpperCase()}.</strong>
+        noData.style.display='block';
+        noData.innerHTML = `<strong>No data yet for ${KEY_INFO[key]?.name || key.toUpperCase()}.</strong>
           <div>Add this block to <code>leaders.json</code>:</div>
-          <code>${JSON.stringify(template, null, 2)}</code>
-        `;
+          <code>${JSON.stringify(template,null,2)}</code>`;
       } else {
-        noData.style.display = 'none';
-        noData.innerHTML = '';
+        noData.style.display='none'; noData.innerHTML='';
       }
 
-      // Share buttons
       const key = league.key;
       $('#btnSave').onclick  = ()=> exportShareCard(league, updated, 'download');
       $('#btnOpen').onclick  = ()=> exportShareCard(league, updated, 'open');
@@ -508,19 +541,12 @@
         catch(e){ $('#shareStatus').textContent='Copy failed'; }
       };
 
-      // Links
       updateShareLinks(key, league.name || (KEY_INFO[key]?.name) || key.toUpperCase());
-
       overlay.classList.add('active'); overlay.setAttribute('aria-hidden','false'); $('#mClose').focus();
     }
 
-    function closeModal(){
-      const overlay=$('#overlay');
-      overlay.classList.remove('active');
-      overlay.setAttribute('aria-hidden','true');
-      const u = new URL(location.href); u.searchParams.delete('league'); history.replaceState(null,'',u);
-    }
-
+    function closeModal(){ const ov=$('#overlay'); ov.classList.remove('active'); ov.setAttribute('aria-hidden','true');
+      const u = new URL(location.href); u.searchParams.delete('league'); history.replaceState(null,'',u); }
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
     $('#overlay').addEventListener('click', (e)=>{ if(e.target.id==='overlay') closeModal(); });
     $('#mClose').addEventListener('click', closeModal);
@@ -544,31 +570,23 @@
       return !!window.html2canvas;
     }
 
-    /* === Image export (JPEG) with fallbacks === */
     async function exportShareCard(league, updated, mode){
       try{
         await ensureHtml2Canvas();
-
-        // Build offscreen card
-        const box=document.createElement('div');
-        box.className='shareCard';
-        const crest='assets/stathub-logo-crest.svg';
-        const when=new Date(updated).toLocaleDateString();
+        const box=document.createElement('div'); box.className='shareCard';
+        const crest='assets/stathub-logo-crest.svg'; const when=new Date(updated).toLocaleDateString();
         const makeList=arr=>(arr && arr.length?arr:[]).map((p,i)=>`
           <li><span class="i">${i+1}</span><span class="name">${p.name}</span><span class="v">${p.value}</span></li>
         `).join('');
         box.innerHTML=`
           <div class="top">
-            <div class="league">
-              <div class="logo"><img src="${crest}" alt="StatHub"></div>
-              <span>${league.name || (KEY_INFO[league.key]?.name) || league.key.toUpperCase()}</span>
-            </div>
+            <div class="league"><div class="logo"><img src="${crest}" alt="StatHub"></div><span>${league.name || (KEY_INFO[league.key]?.name) || league.key.toUpperCase()}</span></div>
             <div class="date">${when}</div>
           </div>
           <div class="rec">
             ${league.record?.holder && league.record.holder!=='—'
               ? `All-time single-season record: <b>${league.record.holder}</b> • ${league.record.goals} goals • ${league.record.season}`
-              : `<span class="muted">No historical record on file</span>`}
+              : `All-time single-season record: —`}
           </div>
           <div class="cols">
             <div><h3>Top Scorers</h3><ol>${makeList(league.scorers)}</ol></div>
@@ -580,57 +598,37 @@
 
         const canvas=await html2canvas(box,{backgroundColor:'#0b0d12',scale:2,useCORS:true});
         box.remove();
-
         const blob=await new Promise(r=>canvas.toBlob(r,'image/jpeg',0.92));
         const fileName=`stathub-${league.key}-leaders.jpg`;
 
         if (mode==='download'){
-          const url=URL.createObjectURL(blob);
-          const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url);
-          $('#shareStatus').textContent='Saved!'; setTimeout(()=>$('#shareStatus').textContent='',1600);
-          return;
+          const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url);
+          $('#shareStatus').textContent='Saved!'; setTimeout(()=>$('#shareStatus').textContent='',1600); return;
         }
+        if (mode==='open'){ const url=URL.createObjectURL(blob); window.open(url,'_blank'); setTimeout(()=>URL.revokeObjectURL(url),5000); return; }
 
-        if (mode==='open'){
-          const url=URL.createObjectURL(blob);
-          window.open(url,'_blank'); // iPhone: Safari Share → Messages/WhatsApp/etc.
-          setTimeout(()=>URL.revokeObjectURL(url), 5000);
-          return;
-        }
-
-        // mode === 'share'
         const file = new File([blob], fileName, {type:'image/jpeg'});
         try{
           if (navigator.canShare && navigator.canShare({files:[file]})) {
             await navigator.share({title: BRAND, text:`${league.name || league.key.toUpperCase()} leaders`, files:[file]});
             return;
           }
-        }catch(_){} // ignore quirks
-
-        // Share deep link as reliable fallback
+        }catch(_){} // ignore
         if (navigator.share){
           await navigator.share({ title: BRAND, text:`${league.name || league.key.toUpperCase()} leaders`, url: withLeagueParam(league.key) });
           return;
         }
-
-        // Clipboard or new tab
         try{
           await navigator.clipboard.write([new ClipboardItem({'image/jpeg': blob})]);
-          $('#shareStatus').textContent='Image copied — paste to chats!';
-          setTimeout(()=>$('#shareStatus').textContent='',2000);
+          $('#shareStatus').textContent='Image copied — paste to chats!'; setTimeout(()=>$('#shareStatus').textContent='',2000);
         }catch(e){
-          const url=URL.createObjectURL(blob);
-          window.open(url,'_blank');
-          setTimeout(()=>URL.revokeObjectURL(url),5000);
+          const url=URL.createObjectURL(blob); window.open(url,'_blank'); setTimeout(()=>URL.revokeObjectURL(url),5000);
         }
       }catch(err){
-        $('#shareStatus').textContent='Share failed';
-        setTimeout(()=>$('#shareStatus').textContent='',2000);
-        console.error(err);
+        $('#shareStatus').textContent='Share failed'; setTimeout(()=>$('#shareStatus').textContent='',2000); console.error(err);
       }
     }
 
-    // Init
     (async function init(){
       renderDropdown();
       const DATA = await getData();
@@ -640,6 +638,7 @@
   </script>
 </body>
 </html>
+
 
 
 
