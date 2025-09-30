@@ -4,18 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>StatSnap — Home</title>
-  <meta name="description" content="StatSnap — tap a league circle to view current player leaders." />
+  <meta name="description" content="StatSnap — tap a league circle to view and share current player leaders." />
   <style>
-    :root{ --bg:#0b0d12; --panel:#111724; --panel2:#0f1522; --tx:#e8edf7; --tx-dim:#a6b0c3; --divider:#27324a; --maxw:1200px; --shadow:0 8px 26px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); }
+    :root{
+      --bg:#0b0d12; --panel:#111724; --panel2:#0f1522; 
+      --tx:#e8edf7; --tx-dim:#a6b0c3;
+      --divider:#27324a;
+      --maxw:1200px;
+      --shadow:0 8px 26px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
+      --brand:#5aa2ff;
+    }
     *{box-sizing:border-box}
-    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-      background: radial-gradient(1400px 700px at 50% -12%, rgba(90,162,255,.18), transparent 70%),
-                  radial-gradient(1000px 620px at 88% 8%, rgba(0,210,255,.12), transparent 65%), var(--bg);
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:
+        radial-gradient(1400px 700px at 50% -12%, rgba(90,162,255,.18), transparent 70%),
+        radial-gradient(1000px 620px at 88% 8%, rgba(0,210,255,.12), transparent 65%),
+        var(--bg);
       color:var(--tx);
     }
+
     header{text-align:center; padding:44px 14px 18px}
     h1{margin:0 0 8px; font-size:clamp(32px,5vw,44px); text-shadow:0 0 14px rgba(90,162,255,.4)}
     .tag{color:var(--tx-dim); font-size:14px}
+
     .shell{max-width:var(--maxw); margin:0 auto; padding:24px 20px 40px}
     .grid{display:grid; gap:26px; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); justify-content:center}
 
@@ -28,8 +40,12 @@
     @media (prefers-reduced-motion:reduce){ .tile{transition:none} }
     .tile:hover{ transform:translateY(-6px) scale(1.05); border-color:var(--accent);
       box-shadow:0 14px 30px rgba(0,0,0,.45), 0 0 16px color-mix(in oklab, var(--accent) 45%, transparent); }
-    .logoBox{ width:70px; height:70px; margin-bottom:8px; display:grid; place-items:center; border-radius:50%;
-      background:#0e1422; border:1px solid var(--divider); box-shadow:inset 0 0 18px rgba(90,162,255,.15); overflow:hidden; }
+
+    .logoBox{
+      width:70px; height:70px; margin-bottom:8px; display:grid; place-items:center; border-radius:50%;
+      background:#0e1422; border:1px solid var(--divider); box-shadow:inset 0 0 18px rgba(90,162,255,.15);
+      overflow:hidden;
+    }
     .logoImg{ max-width:64px; max-height:64px; width:auto; height:auto; object-fit:contain; display:block; filter:drop-shadow(0 2px 4px rgba(0,0,0,.45)) }
     .logoEmoji{ font-size:40px; line-height:1; display:none }
     .tileName{ font-weight:900; font-size:14px; text-align:center }
@@ -44,7 +60,7 @@
     /* modal */
     .overlay{position:fixed; inset:0; background:rgba(0,0,0,.70); display:none; align-items:center; justify-content:center; z-index:200}
     .overlay.active{display:flex}
-    .modal{ --accent:#5aa2ff; width:min(680px,92vw); max-height:90vh; overflow:auto;
+    .modal{ --accent:#5aa2ff; width:min(700px,92vw); max-height:90vh; overflow:auto;
       background:linear-gradient(180deg,#111724,#0f1522); border:1px solid var(--divider); border-radius:20px;
       box-shadow:0 24px 60px rgba(0,0,0,.6); animation:zoomIn .28s ease; position:relative }
     @keyframes zoomIn{from{opacity:0; transform:scale(.9)} to{opacity:1; transform:scale(1)}}
@@ -59,7 +75,7 @@
     .mClose:hover{border-color:var(--accent)}
     .record{padding:12px 18px; border-bottom:1px dashed var(--divider); color:var(--tx-dim); font-size:13px; line-height:1.5}
     .record b{color:#ffd76a; text-shadow:0 0 10px rgba(255,215,106,.25)}
-    .cols{display:grid; gap:18px; padding:16px 18px 22px}
+    .cols{display:grid; gap:18px; padding:16px 18px 6px}
     .col h4{margin:0 0 8px; font-size:14px; letter-spacing:.2px; color:var(--tx); position:relative; padding-left:10px}
     .col h4::before{content:""; position:absolute; left:0; top:50%; transform:translateY(-50%); width:4px; height:14px; border-radius:2px;
       background:var(--accent); box-shadow:0 0 10px color-mix(in oklab, var(--accent) 60%, transparent)}
@@ -67,20 +83,53 @@
     .row{display:grid; grid-template-columns:26px 1fr auto; gap:10px; align-items:center; padding:8px 10px; border:1px solid var(--divider);
       border-radius:12px; background:#121a2a}
     .row:hover{border-color:#33405b; background:#182034}
-    .idx{width:24px; height:24px; border-radius:50%; display:grid; place-items:center; font-weight:900; color:var(--tx-dim);
+    .idx{width:24px; height:24px; border-radius:50%; display:grid; place-items:center; font-weight:900; color:#aeb7cc;
       background:rgba(255,255,255,.05); border:1px solid var(--divider)}
     .nm{font-weight:800; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
     .val{font-weight:900; font-size:13px; color:#cfe2ff; padding:2px 10px; border-radius:999px; border:1px solid var(--divider);
       background:#0f1522; min-width:34px; text-align:center}
     .row:first-child .idx{background:linear-gradient(180deg,#2a2230,#3a2a12); border-color:#6b5320; color:#ffd76a}
     .row:first-child .nm::before{content:"👑 "}
+
+    /* share bar */
+    .shareBar{display:flex; gap:10px; flex-wrap:wrap; padding:12px 18px 16px; border-top:1px solid var(--divider)}
+    .btn{display:inline-flex; align-items:center; gap:8px; background:#121a2a; border:1px solid var(--divider); color:var(--tx);
+      padding:8px 10px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer}
+    .btn:hover{border-color:var(--brand)}
+    .shareLinks{display:flex; gap:10px; padding:0 18px 18px}
+    .shareLinks a{font-size:13px; color:#cfe2ff; text-decoration:none; border:1px solid var(--divider); padding:6px 8px; border-radius:8px}
+    .shareLinks a:hover{border-color:var(--brand)}
     footer{text-align:center; color:var(--tx-dim); padding:20px; font-size:12px; border-top:1px solid rgba(255,255,255,.05)}
+    
+    /* export card (offscreen) */
+    .shareCard{
+      width:1080px; padding:36px 36px 28px; border-radius:24px; 
+      background: radial-gradient(1200px 600px at 50% -10%, rgba(90,162,255,.18), transparent 60%), #0b0d12;
+      color:#e8edf7; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      border:2px solid #27324a;
+    }
+    .shareCard .top{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px}
+    .shareCard .league{display:flex; align-items:center; gap:14px; font-weight:900; font-size:40px}
+    .shareCard .logo{width:72px; height:72px; border-radius:50%; display:grid; place-items:center; background:#0e1422; border:1px solid #27324a; overflow:hidden}
+    .shareCard .logo img{max-width:64px; max-height:64px}
+    .shareCard .date{color:#a6b0c3; font-weight:700}
+    .shareCard .rec{margin:8px 0 18px; color:#a6b0c3; font-size:24px}
+    .shareCard .rec b{color:#ffd76a}
+    .shareCard .cols{display:grid; gap:18px; grid-template-columns:1fr 1fr}
+    .shareCard h3{margin:0 0 10px; font-size:26px; color:#cfe2ff}
+    .shareCard ol{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+    .shareCard li{display:grid; grid-template-columns:40px 1fr 60px; gap:12px; align-items:center; background:#121a2a; border:1px solid #27324a; border-radius:12px; padding:10px 12px}
+    .shareCard .i{width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:#0f1522; color:#a6b0c3; font-weight:900}
+    .shareCard .name{font-weight:800; font-size:22px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .shareCard .v{font-weight:900; font-size:22px; color:#cfe2ff; text-align:center}
   </style>
+  <!-- html2canvas for image export -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
 </head>
 <body>
   <header>
     <h1>StatSnap</h1>
-    <p class="tag">Tap a league circle to view current <b>player</b> leaders.</p>
+    <p class="tag">Tap a league circle to view current <b>player</b> leaders. Share them as an image.</p>
   </header>
 
   <main class="shell">
@@ -105,6 +154,20 @@
           <h4>Current Top Assisters</h4>
           <ol class="list" id="mAssisters"></ol>
         </section>
+      </div>
+
+      <!-- Share bar -->
+      <div class="shareBar">
+        <button class="btn" id="btnSave"><span>📷</span> Save PNG</button>
+        <button class="btn" id="btnShare"><span>📤</span> Share Image</button>
+        <button class="btn" id="btnCopyLink"><span>🔗</span> Copy Link</button>
+        <span id="shareStatus" style="color:#a6f3c3; font-size:12px; font-weight:700"></span>
+      </div>
+      <div class="shareLinks">
+        <a id="linkX" target="_blank" rel="noopener">Share on X</a>
+        <a id="linkFB" target="_blank" rel="noopener">Facebook</a>
+        <a id="linkWA" target="_blank" rel="noopener">WhatsApp</a>
+        <a id="linkTG" target="_blank" rel="noopener">Telegram</a>
       </div>
     </div>
   </div>
@@ -136,7 +199,7 @@
   <script>
     const $ = (s, r=document)=>r.querySelector(s);
 
-    // Map: league key -> logo file + emoji fallback
+    // Logos
     const LOGOS = {
       epl:        { src: 'assets/epl.png',        fallback: '🇬🇧', alt: 'Premier League logo' },
       laliga:     { src: 'assets/laliga.png',     fallback: '🇪🇸', alt: 'La Liga logo' },
@@ -187,8 +250,17 @@
         btn.addEventListener('click', ()=>{
           const league = DATA.competitions.find(x=>x.key===key);
           openModal(league, DATA.updated);
+          updateShareLinks(key, league.name);
+          history.replaceState(null, '', withLeagueParam(key)); // update URL for deep-linking
         });
       });
+
+      // Deep link support (?league=epl)
+      const urlKey = new URLSearchParams(location.search).get('league');
+      if (urlKey) {
+        const league = DATA.competitions.find(x=>x.key===urlKey);
+        if (league) { openModal(league, DATA.updated); updateShareLinks(urlKey, league.name); }
+      }
     }
 
     function listHTML(arr){
@@ -199,6 +271,12 @@
           <span class="val">${p.value}</span>
         </li>
       `).join('');
+    }
+
+    function withLeagueParam(key){
+      const u = new URL(location.href);
+      u.searchParams.set('league', key);
+      return u.toString();
     }
 
     function openModal(league, updated){
@@ -212,17 +290,139 @@
       `;
       $('#mScorers').innerHTML   = listHTML(league.scorers);
       $('#mAssisters').innerHTML = listHTML(league.assisters);
+
+      // Wire share buttons for this league
+      const key = league.key;
+      $('#btnSave').onclick  = ()=> exportShareCard(league, updated, 'download');
+      $('#btnShare').onclick = ()=> exportShareCard(league, updated, 'share');
+      $('#btnCopyLink').onclick = async ()=>{
+        try{
+          await navigator.clipboard.writeText(withLeagueParam(key));
+          $('#shareStatus').textContent = 'Link copied!';
+          setTimeout(()=>$('#shareStatus').textContent='', 1600);
+        }catch(e){ $('#shareStatus').textContent = 'Copy failed'; }
+      };
+
       overlay.classList.add('active'); overlay.setAttribute('aria-hidden','false'); $('#mClose').focus();
     }
-    function closeModal(){ const overlay=$('#overlay'); overlay.classList.remove('active'); overlay.setAttribute('aria-hidden','true'); }
+
+    function closeModal(){
+      const overlay=$('#overlay'); overlay.classList.remove('active'); overlay.setAttribute('aria-hidden','true');
+      // remove league from URL (optional)
+      const u = new URL(location.href); u.searchParams.delete('league'); history.replaceState(null,'',u);
+    }
+
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
     $('#overlay').addEventListener('click', (e)=>{ if(e.target.id==='overlay') closeModal(); });
     $('#mClose').addEventListener('click', closeModal);
 
+    // --- SHARE LINKS (deep link share)
+    function updateShareLinks(key, name){
+      const url = encodeURIComponent(withLeagueParam(key));
+      const text = encodeURIComponent(`${name} player leaders on StatSnap`);
+      $('#linkX').href  = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+      $('#linkFB').href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+      $('#linkWA').href = `https://api.whatsapp.com/send?text=${text}%20${url}`;
+      $('#linkTG').href = `https://t.me/share/url?url=${url}&text=${text}`;
+    }
+
+    // --- IMAGE EXPORT + NATIVE SHARE ---
+    async function exportShareCard(league, updated, mode){
+      // Build an offscreen share card
+      const box = document.createElement('div');
+      box.className = 'shareCard';
+      const logo = LOGOS[league.key]?.src || '';
+      const when = new Date(updated).toLocaleDateString();
+
+      const makeList = (arr)=>arr.map((p,i)=>`
+        <li><span class="i">${i+1}</span><span class="name">${p.name}</span><span class="v">${p.value}</span></li>
+      `).join('');
+
+      box.innerHTML = `
+        <div class="top">
+          <div class="league">
+            <div class="logo"><img src="${logo}" alt=""></div>
+            <span>${league.name}</span>
+          </div>
+          <div class="date">${when}</div>
+        </div>
+        <div class="rec">All-time single-season record: <b>${league.record.holder}</b> • ${league.record.goals} goals • ${league.record.season}</div>
+        <div class="cols">
+          <div>
+            <h3>Top Scorers</h3>
+            <ol>${makeList(league.scorers)}</ol>
+          </div>
+          <div>
+            <h3>Top Assisters</h3>
+            <ol>${makeList(league.assisters)}</ol>
+          </div>
+        </div>
+      `;
+      box.style.position='fixed'; box.style.left='-20000px'; // offscreen
+      document.body.appendChild(box);
+
+      // Wait for html2canvas (loaded with defer)
+      if (typeof html2canvas !== 'function'){
+        alert('Image tool failed to load. Try again.');
+        box.remove();
+        return;
+      }
+
+      const canvas = await html2canvas(box, {backgroundColor:null, scale:2, useCORS:true});
+      box.remove();
+
+      // Convert to blob
+      const blob = await new Promise(res=>canvas.toBlob(res,'image/png',1));
+      const fileName = `${league.key}-leaders.png`;
+
+      if (mode==='download'){
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = fileName;
+        document.body.appendChild(a); a.click(); a.remove();
+        URL.revokeObjectURL(url);
+        $('#shareStatus').textContent = 'Saved!';
+        setTimeout(()=>$('#shareStatus').textContent='', 1600);
+        return;
+      }
+
+      // mode === 'share' → use Web Share API when available
+      if (navigator.canShare && navigator.canShare({ files: [new File([blob], fileName, {type:'image/png'})] })) {
+        try{
+          await navigator.share({
+            title: 'StatSnap',
+            text: `${league.name} leaders`,
+            files: [new File([blob], fileName, {type:'image/png'})]
+          });
+        }catch(e){
+          // user cancelled or failed → fall back to download
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url; a.download = fileName; a.click();
+          URL.revokeObjectURL(url);
+        }
+      } else {
+        // Fallback: try copy to clipboard (supported on Chrome/Edge)
+        try{
+          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+          $('#shareStatus').textContent = 'Image copied — paste to chats!';
+          setTimeout(()=>$('#shareStatus').textContent='', 2000);
+        }catch(err){
+          // final fallback: download
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url; a.download = fileName; a.click();
+          URL.revokeObjectURL(url);
+        }
+      }
+    }
+
+    // Init
     getData().then(renderTiles);
   </script>
 </body>
 </html>
+
 
 
 
