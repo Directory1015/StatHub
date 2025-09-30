@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>StatSnap — Home</title>
-  <meta name="description" content="StatSnap — tap a league circle to view and share current player leaders." />
+  <title>StatHub — Home</title>
+  <meta name="description" content="StatHub — tap a league circle to view and share current player leaders." />
   <style>
     :root{
       --bg:#0b0d12; --panel:#111724; --panel2:#0f1522; 
@@ -137,8 +137,16 @@
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
 </head>
 <body>
+  <!-- OPTIONAL: Cloudinary config (fill to enable auto-upload for a shareable URL) -->
+  <script>
+    window.STATHUB_CLOUDINARY = {
+      cloudName: "",         // e.g. "mycloud"
+      uploadPreset: ""       // e.g. "unsigned_preset"
+    };
+  </script>
+
   <header>
-    <h1>StatSnap</h1>
+    <h1>StatHub</h1>
     <p class="tag">Tap a league circle to view current <b>player</b> leaders. Share them as an image.</p>
   </header>
 
@@ -168,7 +176,8 @@
 
       <div class="shareBar">
         <button class="btn" id="btnSave"><span>📷</span> Save JPG</button>
-        <button class="btn" id="btnShare"><span>📤</span> Share Image</button>
+        <button class="btn" id="btnShare"><span>📤</span> Share</button>
+        <button class="btn" id="btnOpen"><span>🖼️</span> Open JPG</button>
         <button class="btn" id="btnCopyLink"><span>🔗</span> Copy Link</button>
         <span id="shareStatus" style="color:#a6f3c3; font-size:12px; font-weight:700"></span>
       </div>
@@ -207,6 +216,7 @@
 
   <script>
     const $ = (s, r=document)=>r.querySelector(s);
+    const BRAND = 'StatHub';
 
     /* Logos */
     const LOGOS = {
@@ -251,7 +261,6 @@
         const key = btn.getAttribute('data-key');
         const img = btn.querySelector('.logoImg');
         const emoji = btn.querySelector('.logoEmoji');
-
         img.addEventListener('error', ()=>{ img.style.display='none'; emoji.style.display='block'; });
 
         btn.addEventListener('click', ()=>{
@@ -299,6 +308,7 @@
 
       const key = league.key;
       $('#btnSave').onclick  = ()=> exportShareCard(league, updated, 'download');
+      $('#btnOpen').onclick  = ()=> exportShareCard(league, updated, 'open');
       $('#btnShare').onclick = ()=> exportShareCard(league, updated, 'share');
       $('#btnCopyLink').onclick = async ()=>{
         try{ await navigator.clipboard.writeText(withLeagueParam(key));
@@ -322,14 +332,13 @@
 
     function updateShareLinks(key, name){
       const url = encodeURIComponent(withLeagueParam(key));
-      const text = encodeURIComponent(`${name} player leaders on StatSnap`);
+      const text = encodeURIComponent(`${name} player leaders on ${BRAND}`);
       $('#linkX').href  = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
       $('#linkFB').href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
       $('#linkWA').href = `https://api.whatsapp.com/send?text=${text}%20${url}`;
       $('#linkTG').href = `https://t.me/share/url?url=${url}&text=${text}`;
     }
 
-    /* === Image export (JPEG) with robust share fallbacks === */
     async function ensureHtml2Canvas(){
       if (window.html2canvas) return true;
       await new Promise((res,rej)=>{
@@ -340,6 +349,21 @@
       return !!window.html2canvas;
     }
 
+    // Optional Cloudinary upload (unsigned)
+    async function uploadToCloudinary(blob){
+      const cfg = window.STATHUB_CLOUDINARY || {};
+      if (!cfg.cloudName || !cfg.uploadPreset) return null; // not configured
+      const fd = new FormData();
+      fd.append('file', blob, 'stathub.jpg');
+      fd.append('upload_preset', cfg.uploadPreset);
+      const url = `https://api.cloudinary.com/v1_1/${cfg.cloudName}/image/upload`;
+      const res = await fetch(url, { method:'POST', body: fd });
+      if (!res.ok) throw new Error('Cloud upload failed');
+      const data = await res.json();
+      return data.secure_url; // public https URL
+    }
+
+    /* === Image export (JPEG) with robust fallbacks === */
     async function exportShareCard(league, updated, mode){
       try{
         await ensureHtml2Canvas();
@@ -371,7 +395,7 @@
         box.remove();
 
         const blob=await new Promise(r=>canvas.toBlob(r,'image/jpeg',0.92));
-        const fileName=`${league.key}-leaders.jpg`;
+        const fileName=`stathub-${league.key}-leaders.jpg`;
 
         if (mode==='download'){
           const url=URL.createObjectURL(blob);
@@ -380,29 +404,51 @@
           return;
         }
 
-        // Try native share with file
-        const file = new File([blob], fileName, {type:'image/jpeg'});
-        try{
-          if (navigator.canShare && navigator.canShare({files:[file]})) {
-            await navigator.share({title:'StatSnap', text:`${league.name} leaders`, files:[file]});
-            return;
-          }
-        }catch(_){} // ignore canShare quirks
-
-        // Fallback: share the deep link (so Share button always does something)
-        if (navigator.share){
-          await navigator.share({ title:'StatSnap', text:`${league.name} leaders`, url: withLeagueParam(league.key) });
+        if (mode==='open'){
+          const url=URL.createObjectURL(blob);
+          window.open(url,'_blank'); // iPhone: Safari Share → Messages/WhatsApp/etc.
+          setTimeout(()=>URL.revokeObjectURL(url), 5000);
           return;
         }
 
-        // Last resorts: copy to clipboard (if supported), else open image in new tab
+        // mode === 'share'
+        // 1) Native share with file, if supported
+        const file = new File([blob], fileName, {type:'image/jpeg'});
+        try{
+          if (navigator.canShare && navigator.canShare({files:[file]})) {
+            await navigator.share({title: BRAND, text:`${league.name} leaders`, files:[file]});
+            return;
+          }
+        }catch(_){} // quirks on some browsers
+
+        // 2) Upload to Cloudinary (if configured) and share URL
+        try{
+          const uploadedUrl = await uploadToCloudinary(blob);
+          if (uploadedUrl && navigator.share){
+            await navigator.share({ title: BRAND, text:`${league.name} leaders`, url: uploadedUrl });
+            return;
+          } else if (uploadedUrl){
+            await navigator.clipboard.writeText(uploadedUrl);
+            $('#shareStatus').textContent='Image link copied!';
+            setTimeout(()=>$('#shareStatus').textContent='',2000);
+            return;
+          }
+        }catch(e){ console.warn(e); } // continue
+
+        // 3) Share the deep link (always works)
+        if (navigator.share){
+          await navigator.share({ title: BRAND, text:`${league.name} leaders`, url: withLeagueParam(league.key) });
+          return;
+        }
+
+        // 4) Last resorts: clipboard image or open in new tab
         try{
           await navigator.clipboard.write([new ClipboardItem({'image/jpeg': blob})]);
           $('#shareStatus').textContent='Image copied — paste to chats!';
           setTimeout(()=>$('#shareStatus').textContent='',2000);
         }catch(e){
           const url=URL.createObjectURL(blob);
-          window.open(url,'_blank'); // user can long-press & share
+          window.open(url,'_blank');
           setTimeout(()=>URL.revokeObjectURL(url),5000);
         }
       }catch(err){
@@ -416,6 +462,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
