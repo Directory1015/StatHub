@@ -61,57 +61,51 @@
         { "name": "Ritsu Doan (Eintracht Frankfurt)", "value": "3" }
       ]
     },
-    {
-      "key": "ligue1",
-      "name": "Ligue 1",
-      "record": { "holder": "Kylian Mbappé", "goals": "27", "season": "2018/19" },
-      "scorers": [
-        { "name": "Ansu Fati (Monaco)", "value": "3" },
-        { "name": "Pierre-Emerick Aubameyang (Marseille)", "value": "3" },
-        { "name": "Bradley Barcola (PSG)", "value": "3" }
-      ],
-      "assisters": [
-        { "name": "Ludovic Ajorque (Stade Brest 29)", "value": "4" },
-        { "name": "Dilane Bakwa (RC Strasbourg Alsace)", "value": "3" },
-        { "name": "Félix Correia (LOSC Lille)", "value": "3" }
-      ]
-    },
-
-    /* ===== Updated with your tournament note (MD1) ===== */
-    {
+          {
+        "key": "ligue1",
+        "name": "Ligue 1",
+        "record": { "holder": "Kylian Mbappé", "goals": "27", "season": "2018/19" },
+        "scorers": [
+          { "name": "Ansu Fati (Monaco)", "value": "3" },
+          { "name": "Pierre-Emerick Aubameyang (Marseille)", "value": "3" },
+          { "name": "Bradley Barcola (PSG)", "value": "3" }
+        ],
+        "assisters": [
+          { "name": "Ludovic Ajorque (Stade Brest 29)", "value": "4" },
+          { "name": "Dilane Bakwa (RC Strasbourg Alsace)", "value": "3" },
+          { "name": "Félix Correia (LOSC Lille)", "value": "3" }
+        ]
+      },
       {
-  "key": "ucl",
-  "name": "UEFA Champions League",
-  "record": { "holder": "Cristiano Ronaldo", "goals": "17", "season": "2013/14" },
-  "scorers": [
-    { "name": "Kylian Mbappé (Real Madrid)", "value": "5" },
-    { "name": "Harry Kane (Bayern Munich)", "value": "4" },
-    { "name": "Francisco Trincão (Sporting CP)", "value": "2" }
-  ],
-  "assisters": [
-    { "name": "Michael Olise (RB Salzburg)", "value": "2" },
-    { "name": "Hakan Çalhanoğlu (Inter Milan)", "value": "2" },
-    { "name": "Håkon Evjen (BSC Young Boys)", "value": "2" }
-  ]
-}
+        "key": "ucl",
+        "name": "UEFA Champions League",
+        "record": { "holder": "Cristiano Ronaldo", "goals": "17", "season": "2013/14" },
+        "scorers": [
+          { "name": "Kylian Mbappé (Real Madrid)", "value": "5" },
+          { "name": "Harry Kane (Bayern Munich)", "value": "4" },
+          { "name": "Francisco Trincão (Sporting CP)", "value": "2" }
+        ],
+        "assisters": [
+          { "name": "Michael Olise (RB Salzburg)", "value": "2" },
+          { "name": "Hakan Çalhanoğlu (Inter Milan)", "value": "2" },
+          { "name": "Håkon Evjen (BSC Young Boys)", "value": "2" }
+        ]
+      },
+      {
+        "key": "primeiraliga",
+        "name": "Primeira Liga (2025/26)",
+        "record": { "holder": "—", "goals": "—", "season": "—" },
+        "scorers": [
+          { "name": "Clayton (Rio Ave)", "value": "5" },
+          { "name": "Guilherme Schettine (Moreirense)", "value": "5" },
+          { "name": "Silva C. (Benfica)", "value": "5" }
+        ],
+        "assisters": [
+          { "name": "Alberto Costa (Porto)", "value": "4" },
+          { "name": "Leonardo Lelo (Braga)", "value": "4" }
+        ]
+      },
 
-
-    /* ===== Your newly provided leagues & tournaments ===== */
-
-    {
-      "key": "primeiraliga",
-      "name": "Primeira Liga (2025/26)",
-      "record": { "holder": "—", "goals": "—", "season": "—" },
-      "scorers": [
-        { "name": "Clayton (Rio Ave)", "value": "5" },
-        { "name": "Guilherme Schettine (Moreirense)", "value": "5" },
-        { "name": "Silva C. (Benfica)", "value": "5" }
-      ],
-      "assisters": [
-        { "name": "Alberto Costa (Porto)", "value": "4" },
-        { "name": "Leonardo Lelo (Braga)", "value": "4" }
-      ]
-    },
     {
       "key": "saudi",
       "name": "Saudi Pro League (2025/26)",
